@@ -1,0 +1,51 @@
+
+INSERT INTO genre (Nom) VALUES ("Homme");
+INSERT INTO genre (Nom) VALUES ("Femme");
+INSERT INTO genre (Nom) VALUES ("Non binaire");
+INSERT INTO genre (Nom) VALUES ("Autres");
+
+INSERT INTO compte (Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("Soulier", "Enzo", "2003-06-12", 1, md5("soulier123"), "enzo.soulier@iut-rodez.fr"); 
+INSERT INTO compte (Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("Mars", "Jeanne", "1990-02-05", 2, md5("aurevoir000"), "marsjeanne@gmail.com");
+INSERT INTO compte (Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("Durand", "William", "2020-01-07", null, md5("xxxgamerxxx"), "gamer.william@orange.fr");
+INSERT INTO compte (Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("Dutronc", "Gertrude", null, 2, md5("deuxiemeguerre"), "gertrudelabest@gmail.com");
+INSERT INTO compte (Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("Michel", "Mathis", "2007-06-05", 4, md5("boom123"), "m.michel@gmail.com");
+INSERT INTO compte (Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("Depardieu", "Gérard", "1985-10-10", 1, md5("alcool"), "vinagricole@orange.fr");
+INSERT INTO compte (Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("Chaplin", "Charlie", "1966-04-30", 2, md5("mimedepuis1900"), "mimevie@laposte.net");
+
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Admiration", "/Emoji/Admiration.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Adoration", "/Emoji/Adoration.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Appréciation esthétique", "/Emoji/AppreciationEsthetique.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Amusement", "/Emoji/Amusement.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Anxiété", "Emoji/Anxiete.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Colère", "/Emoji/Colere.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Calme (sérénité)", "/Emoji/Calme.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Confusion", "/Emoji/Confusion.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Dégoût", "/Emoji/Degout.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Douleur empathique", "/Emoji/DouleurEmpathique.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Désir sexuel", "/Emoji/DesirSexuel.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Émerveillement", "/Emoji/Emerveillement.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Ennui", "/Emoji/Ennui.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Envie (craving)", "/Emoji/Envie.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Excitation", "/Emoji/Excitation.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Horreur", "/Emoji/Horreur.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Intérêt étonné, intrigué", "/Emoji/InteretEtonne.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Intérêt", "/Emoji/Interet.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Joie", "/Emoji/Joie.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Malaise (embarrassement)", "/Emoji/Malaise.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Nostalgie", "/Emoji/Nostalgie.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Peur", "/Emoji/Peur.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Romance", "/Emoji/Romance.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Soulagement", "/Emoji/Soulagement.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Satisfaction", "/Emoji/Satisfaction.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Surprise", "/Emoji/Surprise.png");
+INSERT INTO humeur (Libelle, Emoji) VALUES ("Tristesse", "/Emoji/Triste.png");
+
+INSERT INTO historique (Code_Compte, Code_hum, Date_Hum, Date_Ajout, Informations) VALUES (1, 11, "2022-11-09 08:00:00", "2022-11-09 09:00:00", null);
+INSERT INTO historique (Code_Compte, Code_hum, Date_Hum, Date_Ajout, Informations) VALUES (6, 9, "2022-11-08 22:30:00", "2022-11-09 09:00:00", "Le vin n'était pas bon !");
+INSERT INTO historique (Code_Compte, Code_hum, Date_Hum, Date_Ajout, Informations) VALUES (7, 27, "2022-11-09 06:15:00", "2022-11-09 09:05:00", null);
+INSERT INTO historique (Code_Compte, Code_hum, Date_Hum, Date_Ajout, Informations) VALUES (4, 18, "2022-11-08 23:59:59",  "2022-11-09 09:06:00", "J'ai découvert le nouveau du sport moment");
+INSERT INTO historique (Code_Compte, Code_hum, Date_Hum, Date_Ajout, Informations) VALUES (3, 22, "2022-11-09 02:50:00", "2022-11-09 08:00:00", "Le film d'horreur m'a terrifié");
+INSERT INTO historique (Code_Compte, Code_hum, Date_Hum, Date_Ajout, Informations) VALUES (1, 15, "2022-11-09 07:50:00", "2022-11-09 08:30:00", null);
+INSERT INTO historique(Code_Compte, Code_hum, Date_Hum, Date_Ajout, Informations) VALUES (4, 11, "2022-02-05 12:00:00", "2022-02-05 12:00:00", NULL);
+INSERT INTO historique(Code_Compte, Code_hum, Date_Hum, Date_Ajout, Informations) VALUES (4, 11, "2022-02-05 12:00:00", "2022-02-05 12:00:00", NULL);
+INSERT INTO historique(Code_Compte, Code_hum, Date_Hum, Date_Ajout, Informations) VALUES (4, 1, "2022-02-05 12:00:00", "2022-02-05 12:00:00", NULL);
