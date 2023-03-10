@@ -11,4 +11,6 @@
     <string name="mdp_connexion">Mot de passe</string>
     <string name="mdp_connexion_helper">**********</string>
     <string name="mdp_connexion_error">Mot de passe incorrect</string>
+
+    <string name="bouton_connexion">Se connecter</string>
 </resources>
