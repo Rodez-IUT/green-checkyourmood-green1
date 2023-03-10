@@ -10,7 +10,7 @@
         $port = '3306', # to change with the port your mySql server listen to
         $db = 'cym', # to change with your db name
         $user = 'root', # to change with your db user name
-        $pass = 'Mn7kXWr4', # to change with your db password
+        $pass = 'root', # to change with your db password
         $charset = 'utf8mb4'
       );      
 

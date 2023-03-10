@@ -3,10 +3,10 @@
 <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
-        <link rel="stylesheet" href="../css/CSS_principal.css">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="css/CSS_principal.css">
         <script src="https://kit.fontawesome.com/9f5b052c0b.js" crossorigin="anonymous"></script>
-        <script src="../js/Main.js"></script>
+        <script src="js/Main.js"></script>
         <title>CheckYourMood - Connexion</title>
     </head>
     <body>
@@ -15,8 +15,8 @@
             <div class="row navbar">
                 <!-- Logo CYM -->
                 <div class="col-md-1 col-sm-1 col-xs-1">
-                    <a href="../index.php">
-                        <img class="logo_cym" src="../images\logo_CYM.png" alt="Logo">
+                    <a href="index.php">
+                        <img class="logo_cym" src="images\logo_CYM.png" alt="Logo">
                     </a>
                 </div>
                 <!-- Espace entre les éléments du menu et le logo -->
@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="col-md-3"></div>
                         <div class="col-md-3"></div>
-                        <a href="../index.php" class="col-md-3">
+                        <a href="index.php" class="col-md-3">
                             <div class="menu_element">
                                 <i class="fa-solid fa-house"></i> 
                                 <span class="navbar-title">Accueil</span> 
@@ -48,7 +48,7 @@
             <div class="row">
                 <div class="col-md-12 body-container-padding">
                     <!-- debut formulaire -->
-                    <form action="../index.php" method="post">
+                    <form action="index.php" method="post">
                         <input hidden name="action" value="logInAction">
                         <input hidden name="controller" value="Connexion">
                         <h2 class="title-lvl2">Se connecter</h2><br/><br/>

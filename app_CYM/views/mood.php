@@ -3,10 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
-        <link rel="stylesheet" href="../css/CSS_principal.css">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="css/CSS_principal.css">
         <script src="https://kit.fontawesome.com/9f5b052c0b.js" crossorigin="anonymous"></script>
-        <script src="../bootstrap/js/bootstrap.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
         <title>CheckYourMood - Mon compte</title>
     </head>
     <body>
@@ -16,10 +16,10 @@
             <div class="row navbar">
                 <!-- Logo CYM -->
                 <div class="col-md-1">
-                    <form action="../index.php"  method="post">
+                    <form action="index.php"  method="post">
                         <input hidden name="action" value="homeForAcCount">
                         <button type="submit">
-                            <img class="logo_cym" src="../images/logo_CYM.png" alt="Logo">
+                            <img class="logo_cym" src="images/logo_CYM.png" alt="Logo">
                         </button>
                 </form>
                 </div>
@@ -29,7 +29,7 @@
                 <div class="col-md-7">
                     <div class="menu">
                         <div class="menu_element">
-                            <form action="../index.php">
+                            <form action="index.php">
                                 <input hidden name="action" value="homeForAcCount">
                                 <button type="submit" class="menu_element">
                                     <i class="fa-solid fa-house"></i> 
@@ -38,7 +38,7 @@
                             </form>
                         </div>
                         <div class="menu_element">
-                            <form action="../index.php" method="post">
+                            <form action="index.php" method="post">
                                 <input hidden name="controller" value="Moods">
                                 <button type="submit" class="menu_element active">
                                     <i class="fa-solid fa-sun"></i>
@@ -47,7 +47,7 @@
                             </form>
                         </div>
                         <div class="menu_element">
-                            <form action="../index.php" method="post">
+                            <form action="index.php" method="post">
                                 <input type="hidden" name="controller" value="Moods">
                                 <input type="hidden" name="action" value="moodsList">
                                 <button type="submit" class="menu_element">
@@ -57,7 +57,7 @@
                             </form>
                         </div>
                         <div class="menu_element">
-                            <form action="../index.php" method="post">
+                            <form action="index.php" method="post">
                                 <input hidden name="controller" value="Account">
                                 <button type="submit" class="menu_element">
                                     <i class="fa-solid fa-circle-user"></i>
@@ -66,7 +66,7 @@
                             </form>
                         </div>
                         <div class="menu_element">
-                            <form action="../index.php">
+                            <form action="index.php">
                                 <button type="submit" class="menu_element">
                                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                     <span>Déconnection</span>
@@ -117,7 +117,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content cadre_modal">
                     <span class="title-lvl3">Nouvelle humeur</span>
-                    <form action="../index.php">
+                    <form action="index.php">
                         <input type="hidden" name="controller" value="Moods">
                         <input type="hidden" name="action" value="addMood">
                         <span class="title-lvl4">Libellé :</span>
@@ -166,7 +166,7 @@
                 <?php for ($i = 1 ; ($hum = $histoHum->fetch()) && $i <= 9 ; $i++) { ?>
                     <div class="col-md-4 align">
                         <button class="humeurElement" data-bs-toggle="modal" data-bs-target="#info<?php echo $hum["ID_Histo"]?>">
-                            <img class="emojiListe" src="<?php echo $hum["Emoji"];?>" alt="Emoji">
+                            <span class="emojiListe"><?php echo $hum["Emoji"]?></span>
                             <div class="humeurElementText">
                                 <span class="title-lvl4"><?php echo $hum["Libelle"]?></span><br>
                                 <span class="title-lvl4"><?php echo date("d/m/Y H:i", strtotime($hum["Date_Hum"]));?></span>
@@ -189,7 +189,7 @@
                                 $oneDayAgo->sub($dateInterval);
                                 if ($dateHum <= $now && $dateHum >= $oneDayAgo) { 
                                 ?>
-                                    <form action="../index.php" method="post">
+                                    <form action="index.php" method="post">
                                         <input type="hidden" name="controller" value="Moods">
                                         <input type="hidden" name="idHisto" value="<?php echo $hum["ID_Histo"];?>">
                                         <div class="separateurModalHum"></div>
@@ -254,7 +254,7 @@
                 <div class="col-md-12 title-lvl4-left">
                     <span>Période :</span>
                 </div>
-                <form action="../index.php">
+                <form action="index.php">
                     <!-- Select pour visualiser camembert -->
                     <input type="hidden" name="controller" value="Moods">
                     <select name="form-search" class="col-md-2 align periode-search">
@@ -356,7 +356,7 @@
                 <span>Période :</span>
             </div>
             <!-- input pour choisir visualisation Calendrier -->
-            <form action="../index.php">
+            <form action="index.php">
                 <input type="hidden" name="controller" value="Moods">
                 <input type="month" name="dateSelect" class="col-md-2 align periode-search" value="<?php echo $curdate;?>">
                 <button class="periode-search" type="submit">Rechercher</button>

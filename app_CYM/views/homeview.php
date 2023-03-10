@@ -9,7 +9,7 @@ use yasmf\HttpHelper;
         <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="css/CSS_principal.css">
         <script src="https://kit.fontawesome.com/9f5b052c0b.js" crossorigin="anonymous"></script>
-        <script src="../js/Main.js"></script>
+        <script src="js/Main.js"></script>
         <title>CheckYourMood - Accueil</title>
     </head>
     <body>
@@ -71,7 +71,7 @@ use yasmf\HttpHelper;
                         <h2 class="title-lvl2"> Pour nous rejoindre </h2>
                     </div>
                     <!-- formulaire -->
-                    <form action="../index.php" method="post" class="body-container-form">
+                    <form action="index.php" method="post" class="body-container-form">
                         <input hidden name="controller" value="account">
                         <input hidden name="action" value="createAccount">
                         <span>les champs suivit d'un * sont obligatoires</span>

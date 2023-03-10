@@ -507,8 +507,7 @@ button {
 
 /*emoji dans la liste des emojis d'un compte*/
 .emojiListe {
-    width: 60px;
-    height: 50px;
+    font-size: 50px;
     padding-right: 10px;
     border-right: solid black 1px;
 }
