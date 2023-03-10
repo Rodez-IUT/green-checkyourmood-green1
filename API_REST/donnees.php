@@ -116,42 +116,33 @@
 	
 	function ajoutHumeur($donneesJson) {
 		if(!empty($donneesJson['ID_COMPTE'])
-			&& !empty($donneesJson['']) 
-			&& !empty($donneesJson[''])
-			&& !empty($donneesJson[''])
-			&& !empty($donneesJson[''])
-			&& !empty($donneesJson[''])
-			&& !empty($donneesJson[''])
-			&& !empty($donneesJson[''])
-			&& !empty($donneesJson[''])
-			&& !empty($donneesJson[''])
-			&& !empty($donneesJson[''])
+			&& !empty($donneesJson['ID_HUMEUR']) 
+			&& !empty($donneesJson['DATE_HUMEUR'])
+			&& !empty($donneesJson['INFO'])
 		  ){
 			  // Données remplies, on insère dans la table client
 			try {
 				$pdo=getPDO();
-				$maRequete='INSERT INTO clients(CODE_CLIENT, NOM_MAGASIN, ADRESSE_1, ADRESSE_2, CODE_POSTAL, VILLE, RESPONSABLE, TELEPHONE, EMAIL, TYPE_CLIENT) VALUES (:CODE_CLIENT, :NOM_MAGASIN, :ADRESSE_1, :ADRESSE_2, :CODE_POSTAL, :VILLE, :RESPONSABLE, :TELEPHONE, :EMAIL, :TYPE_CLIENT)';
-				$stmt = $pdo->prepare($maRequete);						// Préparation de la requête
-				$stmt->bindParam("CODE_CLIENT", $donneesJson['CODE_CLIENT']);				
-				$stmt->bindParam("NOM_MAGASIN", $donneesJson['NOM_MAGASIN']);
-				$stmt->bindParam("ADRESSE_1", $donneesJson['ADRESSE_1']);
-				$stmt->bindParam("ADRESSE_2", $donneesJson['ADRESSE_2']);
-				$stmt->bindParam("CODE_POSTAL", $donneesJson['CODE_POSTAL']);
-				$stmt->bindParam("VILLE", $donneesJson['VILLE']);
-				$stmt->bindParam("RESPONSABLE", $donneesJson['RESPONSABLE']);
-				$stmt->bindParam("TELEPHONE", $donneesJson['TELEPHONE']);
-				$stmt->bindParam("EMAIL", $donneesJson['EMAIL']);
-				$stmt->bindParam("TYPE_CLIENT", $donneesJson['TYPE_CLIENT']);
-				$stmt->execute();	
 				
-				$IdInsere=$pdo->lastInsertId() ;
-					
+				$sql = "INSERT INTO historique(Code_Compte, Code_hum, Date_Hum, Date_Ajout, Informations)
+                VALUES (:idCompte, :idHum, :dateHum, :dateAjout, :info)";
+
+       			$stmt = $pdo->prepare($sql);
+        		date_default_timezone_set('Europe/Paris');
+        		$now = new DateTime();
+        		$stmt->execute(["idCompte" => $donneesJson['ID_COMPTE'],
+                        		"idHum" => $donneesJson['ID_HUMEUR'],
+                        		"dateHum" => $donneesJson['DATE_HUMEUR'],
+                        		"dateAjout" => $now->format("Y-m-d H:i"),
+                        		"info" => $donneesJson['INFO']]);
+				
+				$stmt->closeCursor();				
 				$stmt=null;
 				$pdo=null;
 				
 				// Retour des informations au client (statut + id créé)
 				$infos['Statut']="OK";
-				$infos['ID']=$IdInsere;
+				$infos['ID'] = "Humeur Inserer : " + $donneesJson['ID_HUMEUR'] + " pour l'utilisateur : " + $donneesJson['ID_COMPTE'];
 
 				sendJSON($infos, 201) ;
 			} catch(PDOException $e){

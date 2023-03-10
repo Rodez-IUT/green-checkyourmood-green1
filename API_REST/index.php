@@ -129,7 +129,7 @@
 				// Récupération des données envoyées
 				$url = explode("/", filter_var($_GET['demande'],FILTER_SANITIZE_URL));
 				switch($url[0]) {
-					case 'humeur' : 
+					case 'humeur': 
 						// Ajout d'un client
 						$donnees = json_decode(file_get_contents("php://input"),true);
 						ajoutHumeur($donnees);
