@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/addresse_connexion"/>
+
+        <EditText
+            android:id="@+id/addresseElectronique"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/addresse_connexion_helper"
+            android:background="@drawable/edittext_style"
+            style="@style/champsConnexion"/>
+
+        <TextView
+            android:id="@+id/addresseElectroniqueError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/addresse_connexion_error"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/mdp_connexion"/>
+
+        <EditText
+            android:id="@+id/motDePasse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/mdp_connexion_helper"
+            android:minHeight="48dp"/>
+
+        <TextView
+            android:id="@+id/motDePasseError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mdp_connexion_error"/>
+    </LinearLayout>
+
+</FrameLayout>

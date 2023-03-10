@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">CYMDroid</string>
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="addresse_connexion">Adresse électronique</string>
+    <string name="addresse_connexion_helper">xxxx@mail.com</string>
+    <string name="addresse_connexion_error">Adresse électronique incorrecte</string>
+
+    <string name="mdp_connexion">Mot de passe</string>
+    <string name="mdp_connexion_helper">**********</string>
+    <string name="mdp_connexion_error">Mot de passe incorrect</string>
+</resources>
