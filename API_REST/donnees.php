@@ -142,7 +142,7 @@
 				
 				// Retour des informations au client (statut + id créé)
 				$infos['Statut']="OK";
-				$infos['ID'] = "Humeur Inserer : " + $donneesJson['ID_HUMEUR'] + " pour l'utilisateur : " + $donneesJson['ID_COMPTE'];
+				$infos['ID'] = "Humeur Inserer : ".$donneesJson['ID_HUMEUR']." pour l'utilisateur : ".$donneesJson['ID_COMPTE'];
 
 				sendJSON($infos, 201) ;
 			} catch(PDOException $e){
