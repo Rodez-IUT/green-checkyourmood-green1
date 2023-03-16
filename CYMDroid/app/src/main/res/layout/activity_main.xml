@@ -3,23 +3,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/logo_cym" />
+        android:src="@drawable/logo_cym"
+        android:layout_marginTop="65dp"/>
 
     <LinearLayout android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/gap_top">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/addresse_connexion"/>
+            android:text="@string/addresse_connexion"
+            android:textSize="@dimen/taille_police"
+            android:maxLines="1"
+            />
 
         <EditText
             android:id="@+id/addresseElectronique"
@@ -34,17 +38,22 @@
             android:id="@+id/addresseElectroniqueError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/addresse_connexion_error"/>
+            android:text="@string/addresse_connexion_error"
+            android:visibility="invisible"
+            android:textColor="@color/champs_connexion_erreur_aide"
+            />
     </LinearLayout>
 
     <LinearLayout android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/gap_top">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/mdp_connexion"/>
+            android:text="@string/mdp_connexion"
+            android:textSize="@dimen/taille_police"/>
 
         <EditText
             android:id="@+id/motDePasse"
@@ -52,17 +61,27 @@
             android:layout_height="wrap_content"
             android:hint="@string/mdp_connexion_helper"
             android:background="@drawable/edittext_style"
-            style="@style/champsConnexion"/>
+            style="@style/champsConnexion"
+            android:maxLines="1"
+            />
 
         <TextView
             android:id="@+id/motDePasseError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mdp_connexion_error"/>
+            android:text="@string/mdp_connexion_error"
+            android:visibility="invisible"
+            android:textColor="@color/champs_connexion_erreur_aide"
+            />
     </LinearLayout>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bouton_connexion"/>
+        android:text="@string/bouton_connexion"
+        android:background="@drawable/btnconnexion_style"
+        style="@style/boutonConnexion"
+        android:onClick="erreurSaisie"
+        />
 
 </LinearLayout>

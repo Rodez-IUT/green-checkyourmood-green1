@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="border_width">2dp</dimen>
+    <dimen name="border_radius">25dp</dimen>
+    <dimen name="padding_left">25dp</dimen>
+    <dimen name="gap_top">43dp</dimen>
+    <dimen name="taille_police">18dp</dimen>
+    
+</resources>

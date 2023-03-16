@@ -5,4 +5,12 @@
         <item name="android:height">48dp</item>
         <item name="android:width">300dp</item>
     </style>
+
+    <style name="boutonConnexion">
+        <item name="android:height">64dp</item>
+        <item name="android:width">240dp</item>
+        <item name="android:textColor">@color/btn_connexion</item>
+        <item name="android:layout_marginTop">@dimen/gap_top</item>
+    </style>
+
 </resources>
