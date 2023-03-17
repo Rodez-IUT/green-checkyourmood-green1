@@ -6,5 +6,12 @@
     <dimen name="padding_left">25dp</dimen>
     <dimen name="gap_top">43dp</dimen>
     <dimen name="taille_police">18dp</dimen>
+    <dimen name="vingtDip">20dip</dimen>
+    <dimen name="vingtCinqDip">25dip</dimen>
+    <dimen name="quinzeDip">15dip</dimen>
+    <dimen name="soixanteDip">60dip</dimen>
+    <dimen name="dixDip">10dip</dimen>
+    <dimen name="trenteDip">30dip</dimen>
+
     
 </resources>
