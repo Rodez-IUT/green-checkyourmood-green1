@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "C:\\Users\\benjamin.dasilva\\.gradle\\daemon\\7.3.3\\com.example.telephone.app-mergeDebugResources-18:\\layout\\alert_vue_description.xml",
+        "source": "C:\\Users\\benjamin.dasilva\\.gradle\\daemon\\7.3.3\\com.example.telephone.app-main-21:\\layout\\alert_vue_description.xml"
+    },
+    {
+        "merged": "com.example.telephone.app-mergeDebugResources-18:/layout/vue_item_liste.xml",
+        "source": "com.example.telephone.app-main-21:/layout/vue_item_liste.xml"
+    },
+    {
+        "merged": "C:\\Users\\benjamin.dasilva\\.gradle\\daemon\\7.3.3\\com.example.telephone.app-mergeDebugResources-18:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\benjamin.dasilva\\.gradle\\daemon\\7.3.3\\com.example.telephone.app-main-21:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\benjamin.dasilva\\.gradle\\daemon\\7.3.3\\com.example.telephone.app-mergeDebugResources-18:\\layout\\toast_vue_description.xml",
+        "source": "C:\\Users\\benjamin.dasilva\\.gradle\\daemon\\7.3.3\\com.example.telephone.app-main-21:\\layout\\toast_vue_description.xml"
+    },
+    {
+        "merged": "C:\\Users\\benjamin.dasilva\\.gradle\\daemon\\7.3.3\\com.example.telephone.app-mergeDebugResources-18:\\layout\\activity_listview.xml",
+        "source": "C:\\Users\\benjamin.dasilva\\.gradle\\daemon\\7.3.3\\com.example.telephone.app-main-21:\\layout\\activity_listview.xml"
+    },
+    {
+        "merged": "C:\\Users\\benjamin.dasilva\\.gradle\\daemon\\7.3.3\\com.example.telephone.app-mergeDebugResources-18:\\layout\\vue_item_liste.xml",
+        "source": "C:\\Users\\benjamin.dasilva\\.gradle\\daemon\\7.3.3\\com.example.telephone.app-main-21:\\layout\\vue_item_liste.xml"
+    },
+    {
+        "merged": "com.example.telephone.app-mergeDebugResources-18:/layout/alert_vue_description.xml",
+        "source": "com.example.telephone.app-main-21:/layout/alert_vue_description.xml"
+    }
+]

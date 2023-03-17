@@ -1,0 +1,45 @@
+R_DEF: Internal format may change without notice
+local
+attr? fullscreenBackgroundColor
+attr? fullscreenTextColor
+color black
+color black_overlay
+color light_blue_600
+color light_blue_900
+color light_blue_A200
+color light_blue_A400
+color purple_200
+color purple_500
+color purple_700
+color teal_200
+color teal_700
+color white
+dimen dixDip
+dimen quinzeDip
+dimen soixanteDip
+dimen trenteDip
+dimen vingtCinqDip
+dimen vingtDip
+drawable alerte_description_humeur
+drawable ic_launcher_foreground
+id alertDescription
+id alertTitre
+id date
+id emoji
+id libelle
+id liste
+layout activity_main
+layout alert_vue_description
+layout vue_item_liste
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+string title_activity_list_view
+style ThemeOverlay.Telephone.FullscreenContainer
+style Theme.Telephone
+style Theme.Telephone.Fullscreen
+style Widget.Theme.Telephone.ActionBar.Fullscreen
+style Widget.Theme.Telephone.ButtonBar.Fullscreen
+styleable FullscreenAttrs fullscreenBackgroundColor fullscreenTextColor
+xml backup_rules
+xml data_extraction_rules
