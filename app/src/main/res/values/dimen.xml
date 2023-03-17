@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="vingtDip">20dip</dimen>
+    <dimen name="vingtCinqDip">25dip</dimen>
+    <dimen name="quinzeDip">15dip</dimen>
+    <dimen name="soixanteDip">60dip</dimen>
+    <dimen name="dixDip">10dip</dimen>
+    <dimen name="trenteDip">30dip</dimen>
+</resources>
