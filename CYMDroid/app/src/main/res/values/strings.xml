@@ -13,4 +13,7 @@
     <string name="mdp_connexion_error">Mot de passe incorrect</string>
 
     <string name="bouton_connexion">Se connecter</string>
+
+    <string name="visualisation_humeur">Visualisater les humeurs</string>
+    <string name="ajouter_humeur">Ajouter une humeur</string>
 </resources>

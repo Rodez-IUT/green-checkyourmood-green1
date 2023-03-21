@@ -1,6 +1,8 @@
 package com.example.cymdroid;
 
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -13,6 +15,10 @@ public class OngletActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
+        getSupportActionBar().hide(); // hide the title bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         setContentView(R.layout.activity_onglet);
         /*
          * on récupère un accès sur le ViewPager défini dans la vue
@@ -28,9 +34,8 @@ public class OngletActivity extends AppCompatActivity {
         /*
          * On regroupe dans un tableau les intitulés des boutons d'onglet
          */
-        String[] titreOnglet = {getString(R.string.onglet_alea),
-                                getString(R.string.onglet_en_cours_1),
-                                getString(R.string.onglet_en_cours_2)};
+        String[] titreOnglet = {getString(R.string.visualisation_humeur),
+                                getString(R.string.ajouter_humeur)};
 
         /*
          * On crée une instance de type TabLayoutMediator qui fera le lien entre
@@ -46,14 +51,7 @@ public class OngletActivity extends AppCompatActivity {
                         tab.setText(titreOnglet[position]);
                     }
                 }).attach();
-         /*
-         * Le code ci-dessus peut être rendu plus concis de la manière suivante :
-         new TabLayoutMediator(tabLayout, pager,
-         (tab, position) -> tab.setText(titreOnglet[position])
-         ).attach();
-         *
-         *
-         */
+
     }
 }
 

@@ -1,5 +1,6 @@
 package com.example.cymdroid;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -42,5 +43,10 @@ public class MainActivity extends AppCompatActivity {
 
         adresseElectronique.setBackgroundResource(R.drawable.edittext_error_style);
         motDePasse.setBackgroundResource(R.drawable.edittext_error_style);
+    }
+
+    public void connecter(View view) {
+        Intent switchActivityIntent = new Intent(this, OngletActivity.class);
+        startActivity(switchActivityIntent);
     }
 }

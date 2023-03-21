@@ -36,9 +36,9 @@ public class AdaptateurPage extends FragmentStateAdapter {
          */
         switch (position) {
             case 0:
-                return AjoutActivity.newInstance();
-            case 1:
                 return VisualisationActivity.newInstance();
+            case 1:
+                return AjoutActivity.newInstance();
             default:
                 return null;
         }

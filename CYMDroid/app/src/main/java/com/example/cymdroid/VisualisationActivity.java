@@ -1,6 +1,5 @@
 package com.example.cymdroid;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -17,6 +16,7 @@ import java.util.List;
 import androidx.fragment.app.Fragment;
 
 public class VisualisationActivity extends Fragment implements AdapterView.OnItemClickListener {
+
     ListView liste;
     List<ItemHumeur> humeurs;
 
