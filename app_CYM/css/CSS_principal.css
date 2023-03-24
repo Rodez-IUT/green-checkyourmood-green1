@@ -512,6 +512,10 @@ button {
     border-right: solid black 1px;
 }
 
+.sizeEmoji{
+    font-size: 50px;
+}
+
 /*CSS des infos complémentaires */
 .infosComplement {
     word-wrap: break-word;

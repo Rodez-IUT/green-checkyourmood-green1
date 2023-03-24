@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="css/CSS_principal.css">
         <script src="https://kit.fontawesome.com/9f5b052c0b.js" crossorigin="anonymous"></script>
         <script src="bootstrap/js/bootstrap.js"></script>
-        <title>CheckYourMood - Mon compte</title>
+        <title>CheckYourMood - Mood</title>
     </head>
     <body>
         <?php date_default_timezone_set('Europe/Paris');?>
@@ -373,7 +373,7 @@
                                 echo '<div class="schedule-card">';
                                 echo '<div class="image-center">';
                                 if ($emojiJour[$i - 1] != null) {
-                                    echo "<img title=\"".$emojiJour[$i - 1]["Libelle"]."\" class=\"image-card\" src=\"".$emojiJour[$i - 1]["Emoji"]."\" alt=\"Emoji\">";
+                                    echo "<span class='sizeEmoji'>".$emojiJour[$i - 1]["Emoji"]."<span>";
                                 }
                                 echo '</div>';
                                 echo '<span>'.$i.'</span>';
