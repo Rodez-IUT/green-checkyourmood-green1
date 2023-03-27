@@ -81,7 +81,7 @@
         android:text="@string/bouton_connexion"
         android:background="@drawable/btnconnexion_style"
         style="@style/boutonConnexion"
-        android:onClick="erreurSaisie"
+        android:onClick="connecter"
         />
 
 </LinearLayout>
