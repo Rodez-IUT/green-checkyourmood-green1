@@ -4,7 +4,7 @@
     <stroke
         android:width="@dimen/border_width"
         android:color="@color/champs_connexion_erreur_bordure"/>
-    <corners android:radius="@dimen/border_radius"/>
+    <corners android:radius="@dimen/border_radius_connexion"/>
     <solid
         android:color="@color/champs_connexion_erreur_fond"/>
     <padding

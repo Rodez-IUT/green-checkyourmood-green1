@@ -2,9 +2,12 @@
 <resources>
 
     <dimen name="border_width">2dp</dimen>
-    <dimen name="border_radius">25dp</dimen>
+    <dimen name="border_radius_connexion">25dp</dimen>
+    <dimen name="border_radius_ajouthumeur">10dp</dimen>
     <dimen name="padding_left">25dp</dimen>
     <dimen name="gap_top">43dp</dimen>
+    <dimen name="gap_left">17dp</dimen>
+    <dimen name="gap_right">17dp</dimen>
     <dimen name="taille_police">18dp</dimen>
 
     <dimen name="vingtDip">20dip</dimen>

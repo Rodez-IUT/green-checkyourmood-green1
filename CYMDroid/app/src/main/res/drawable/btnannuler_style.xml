@@ -3,11 +3,10 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
     <stroke
         android:width="@dimen/border_width"
-        android:color="@color/btn_connexion"/>
-    <corners android:radius="@dimen/border_radius_connexion"/>
+        android:color="@color/btn_annuler"/>
+    <corners android:radius="@dimen/border_radius_ajouthumeur"/>
     <solid
         android:color="@android:color/transparent"/>
     <padding
         android:left="@dimen/padding_left"/>
-
 </shape>
