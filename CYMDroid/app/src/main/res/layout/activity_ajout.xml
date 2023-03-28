@@ -22,6 +22,7 @@
             android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            
             android:background="@drawable/edittext_style"
             style="@style/champsConnexion"/>
 
@@ -38,15 +39,31 @@
             android:text="@string/label_date"
             android:textSize="@dimen/taille_police"/>
 
-        <EditText
-            android:id="@+id/motDePasse"
+        <LinearLayout android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/mdp_connexion_helper"
-            android:background="@drawable/edittext_style"
-            style="@style/champsConnexion"
-            android:maxLines="1"
-            />
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/date_helper"
+                android:focusable="false"
+                android:background="@drawable/edittext_style"
+                style="@style/champsDateHeure"
+                android:layout_marginRight="@dimen/gap_right"/>
+
+            <EditText
+                android:id="@+id/heure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/heure_helper"
+                android:focusable="false"
+                android:background="@drawable/edittext_style"
+                style="@style/champsDateHeure"
+                android:layout_marginLeft="@dimen/gap_left"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -63,12 +80,11 @@
 
         <EditText
             android:id="@+id/infos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/label_info_helper"
-            android:background="@drawable/edittext_style"
             style="@style/champsInfosCompl"
-            />
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_style"
+            android:hint="@string/label_info_helper" />
 
     </LinearLayout>
 
@@ -80,10 +96,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_annuler"
+            android:layout_marginRight="@dimen/gap_right"
             android:background="@drawable/btnannuler_style"
             style="@style/boutonAnnuler"
             android:onClick="annuler"
-            android:layout_marginRight="@dimen/gap_right"
+
             />
 
         <Button

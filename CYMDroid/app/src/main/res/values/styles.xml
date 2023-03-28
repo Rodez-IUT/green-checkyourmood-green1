@@ -20,6 +20,12 @@
         <item name="android:width">300dp</item>
     </style>
 
+    <style name="champsDateHeure">
+        <item name="android:radius">25dp</item>
+        <item name="android:height">48dp</item>
+        <item name="android:width">140dp</item>
+    </style>
+
     <style name="boutonAnnuler">
         <item name="android:height">36dp</item>
         <item name="android:width">138dp</item>

@@ -23,4 +23,6 @@
     <string name="label_info_helper">Vous pouvez saisir des informations complémentaires ici</string>
     <string name="label_annuler">Annuler</string>
     <string name="label_valider">Valider</string>
+    <string name="date_helper">25/12/2022</string>
+    <string name="heure_helper">12:25</string>
 </resources>
