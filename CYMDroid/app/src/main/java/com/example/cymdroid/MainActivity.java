@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView adresseElectroniqueError,
                      motDePasseError;
 
-    private static final String URL_LOGIN = "http://localhost/API_REST/login/%s/%s";
+    private static final String URL_LOGIN = "http://10.0.2.2/API_REST/login/%s/%s";
 
     /** File d'attente pour les requêtes Web (en lien avec l'utilisation de Volley) */
     private RequestQueue fileRequete;
@@ -77,15 +78,17 @@ public class MainActivity extends AppCompatActivity {
              * On crée une requête GET, paramètrée par l'url préparée ci-dessus,
              * Le résultat de cette requête sera un objet Json
              */
-            JsonObjectRequest requeteVolley = new JsonObjectRequest(Request.Method.GET, url, null,
+
+            StringRequest requeteVolley = new StringRequest(Request.Method.GET, url,
                     // écouteur de la réponse renvoyée par la requête
-                    new com.android.volley.Response.Listener<JSONObject>() {
+                    new Response.Listener<String>() {
                         @Override
-                        public void onResponse(JSONObject reponse) {
+                        public void onResponse(String reponse) {
                             // la zone de résultat est renseignée après extraction des
                             // types de clients
                             // Changement de page -> Direction sur la page de visualisation des humeurs
-                            pageVisualisationHumeurs();
+
+                            afficherToast(reponse);
                         }
                     },
                     // écouteur du retour de la requête si aucun résultat n'est renvoyé
