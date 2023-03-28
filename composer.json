@@ -1,0 +1,24 @@
+{
+  "name": "yasmf/yasmf_check_your_mood",
+  "config": {
+    "vendor-dir": "app_CYM/lib/vendor"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/the-yasmf-project/yasmf"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "controllers\\": "app_CYM/controllers"
+    }
+  },
+  "require": {
+    "php": ">=8.1",
+    "phpunit/phpunit": "10.0.*",
+    "phpstan/phpstan": "1.10.*",
+    "ext-pdo": "*",
+    "yasmf/yasmf": ">=1.6"
+  }
+}

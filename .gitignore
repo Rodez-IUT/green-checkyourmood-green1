@@ -1,7 +1,8 @@
+.idea
+.DS_Store
 
-app_CYM/.phpunit.result.cache
-app_CYM/tests/coverage/AccountService.php.html
-app_CYM/tests/coverage/dashboard.html
-app_CYM/tests/coverage/GenderService.php.html
-app_CYM/tests/coverage/index.html
-app_CYM/tests/coverage/MoodsService.php.html
+composer.phar
+vendor
+*.cache
+
+reports

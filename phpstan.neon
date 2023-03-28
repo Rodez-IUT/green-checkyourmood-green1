@@ -1,0 +1,6 @@
+parameters:
+	level: max
+	paths:
+		- hello_world
+	excludePaths:
+	    - hello_world/lib
