@@ -16,14 +16,33 @@
     tabSelectedTextColor : couleur du texte du bouton de l'onglet actif
     tabIndicatorColor : couleur du trait qui souligne le nom du
     bouton de l'onglet actif -->
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="bottom">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo_cym"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:maxHeight="78dp"
+            android:maxWidth="78dp"/>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
         <!-- app:tabTextColor="@color/titre_onglet"
         app:tabBackground="@color/fond_bouton_onglet"
         app:tabSelectedTextColor="@color/onglet_selectionne"
         app:tabIndicatorColor="@color/onglet_selectionne" -->
+
+
+    </LinearLayout>
 
     <!-- ViewPager qui va gérer le défilement via un "glisser" entre les onglets -->
     <androidx.viewpager2.widget.ViewPager2

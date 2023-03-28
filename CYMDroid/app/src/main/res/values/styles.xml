@@ -13,4 +13,20 @@
         <item name="android:layout_marginTop">@dimen/gap_top</item>
     </style>
 
+    <style name="imgNavBar">
+        <item name="android:height">78dp</item>
+        <item name="android:width">78dp</item>
+    </style>
+
+    <style name="StyleDatePicker">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:calendarViewShown">false</item>
+        <item name="android:datePickerMode">calendar</item>
+    </style>
+
+    <style name="">
+        <item name=""></item>
+    </style>
 </resources>

@@ -16,4 +16,11 @@
 
     <string name="visualisation_humeur">Visualisater les humeurs</string>
     <string name="ajouter_humeur">Ajouter une humeur</string>
+
+    <string name="annuler">Annuler</string>
+    <string name="valider">Valider</string>
+
+    <string name="humeur">Humeur :</string>
+    <string name="date">Date et heure :</string>
+    <string name="information">Informations :</string>
 </resources>
