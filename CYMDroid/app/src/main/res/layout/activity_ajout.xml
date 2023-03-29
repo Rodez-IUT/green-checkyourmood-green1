@@ -20,11 +20,10 @@
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            
-            android:background="@drawable/edittext_style"
-            style="@style/champsConnexion"/>
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/spinner_style"
+            style="@style/spinner"/>
 
     </LinearLayout>
 
@@ -81,7 +80,7 @@
         <EditText
             android:id="@+id/infos"
             style="@style/champsInfosCompl"
-            android:layout_width="310dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_style"
             android:hint="@string/label_info_helper" />
@@ -93,25 +92,23 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/annuler"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_annuler"
             android:layout_marginRight="@dimen/gap_right"
             android:background="@drawable/btnannuler_style"
-            style="@style/boutonAnnuler"
-            android:onClick="annuler"
-
-            />
+            style="@style/boutonAnnuler" />
 
         <Button
+            android:id="@+id/valider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_valider"
             android:background="@drawable/btnvalider_style"
             style="@style/boutonValider"
-            android:onClick="valider"
-            android:layout_marginLeft="@dimen/gap_left"
-            />
+            android:layout_marginLeft="@dimen/gap_left"/>
+
     </LinearLayout>
 
 </LinearLayout>
