@@ -5,7 +5,6 @@
     </ANNOTATIONS>
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/dbae40e0053da6d866feea2ea10445c4/transformed/volley-1.2.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/dbae40e0053da6d866feea2ea10445c4/transformed/volley-1.2.1/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/dbae40e0053da6d866feea2ea10445c4/transformed/volley-1.2.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>

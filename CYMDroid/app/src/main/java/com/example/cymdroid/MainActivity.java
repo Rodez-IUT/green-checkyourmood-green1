@@ -79,16 +79,15 @@ public class MainActivity extends AppCompatActivity {
              * Le résultat de cette requête sera un objet Json
              */
 
-            StringRequest requeteVolley = new StringRequest(Request.Method.GET, url,
+            JsonObjectRequest requeteVolley = new JsonObjectRequest(Request.Method.GET, url, null,
                     // écouteur de la réponse renvoyée par la requête
-                    new Response.Listener<String>() {
+                    new Response.Listener<JSONObject>() {
                         @Override
-                        public void onResponse(String reponse) {
+                        public void onResponse(JSONObject reponse) {
                             // la zone de résultat est renseignée après extraction des
                             // types de clients
                             // Changement de page -> Direction sur la page de visualisation des humeurs
-
-                            afficherToast(reponse);
+                            pageVisualisationHumeurs();
                         }
                     },
                     // écouteur du retour de la requête si aucun résultat n'est renvoyé
