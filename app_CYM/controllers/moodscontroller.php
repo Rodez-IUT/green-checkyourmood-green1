@@ -15,8 +15,8 @@ class MoodsController {
     /**
      * Créer et initialise un objet MoodsController 
      */
-    public function __construct() {
-        $this->moodsService = MoodsService::getDefaultMoodsService();
+    public function __construct(MoodsService $moodsService) {
+        $this->moodsService = $moodsService;
     }
 
     /**

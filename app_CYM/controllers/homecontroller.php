@@ -12,8 +12,8 @@
         /**
          * Créer et initialise un objet HomeController 
          */
-        public function __construct() {
-            $this->genderService = new GenderService();
+        public function __construct(GenderService $genderService) {
+            $this->genderService = $genderService;
         }
 
         /**

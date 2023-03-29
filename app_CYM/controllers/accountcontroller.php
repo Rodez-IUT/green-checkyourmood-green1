@@ -10,17 +10,15 @@ use yasmf\View;
 
 class AccountController {
 
-    //instance de service de compte
-    private $accountService;
-    //instance de service de genre
-    private $genderService;
+    private AccountService $accountService;
+    private GenderService $genderService;
 
     /**
      * Créer et initialise un objet AccountController 
      */
-    public function __construct() {
-        $this->accountService = AccountService::getDefaultAccountService();
-        $this->genderService = GenderService::getDefaultGenderService();
+    public function __construct(AccountService $accountService, GenderService $genderService) {
+        $this->accountService = $accountService;
+        $this->genderService = $genderService;
     }
 
     /**

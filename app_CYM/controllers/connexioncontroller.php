@@ -8,14 +8,13 @@ use yasmf\View;
 
 class ConnexionController {
 
-    //instance de service de compte
-    private $accountService;
+    private AccountService $accountService;
 
     /**
      * Créer et initialise un objet ConnexionController 
      */
-    public function __construct() {
-        $this->accountService = AccountService::getDefaultAccountService();
+    public function __construct(AccountService $accountService) {
+        $this->accountService = $accountService;
     }
 
     /**
