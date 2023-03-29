@@ -11,6 +11,7 @@
     <string name="mdp_connexion">Mot de passe</string>
     <string name="mdp_connexion_helper">**********</string>
     <string name="mdp_connexion_error">Mot de passe incorrect</string>
+    <string name="message_erreur_encodage">"Erreur lors de l'encodage de la requête"</string>
 
     <string name="bouton_connexion">Se connecter</string>
 
