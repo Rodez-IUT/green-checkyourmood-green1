@@ -1,0 +1,8 @@
+lancer phpStan avec la config phpstan.neon
+php ./app_CYM/lib/vendor/bin/phpstan --xdebug analyse -c ./phpstan.neon
+
+lancer les test sans coverage
+php ./app_CYM/lib/vendor/bin/phpunit
+
+lancer les test avec coverage
+php -d xdebug.mode=coverage ./app_CYM/lib/vendor/bin/phpunit  --coverage-html='reports/coverage'

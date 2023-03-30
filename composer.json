@@ -11,7 +11,9 @@
   ],
   "autoload": {
     "psr-4": {
-      "controllers\\": "app_CYM/controllers"
+      "controllers\\": "app_CYM/controllers",
+      "services\\": "app_CYM/services",
+      "application\\": "app_CYM/application"
     }
   },
   "require": {

@@ -10,7 +10,7 @@ use yasmf\HttpHelper;
 class MoodsController {
 
     //instance du service des humeurs
-    private $moodsService;
+    private MoodsService $moodsService;
 
     /**
      * Créer et initialise un objet MoodsController 

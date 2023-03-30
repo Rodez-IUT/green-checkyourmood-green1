@@ -20,7 +20,14 @@
 namespace application;
 
 use controllers\HomeController;
-use services\UsersService;
+use controllers\ConnexionController;
+use controllers\AccountController;
+use controllers\MoodsController;
+
+use services\AccountService;
+use services\GenderService;
+use services\MoodsService;
+
 use yasmf\ComponentFactory;
 use yasmf\NoControllerAvailableForName;
 use yasmf\NoServiceAvailableForName;
@@ -32,7 +39,7 @@ class DefaultComponentFactory implements ComponentFactory
 {
     private ?AccountService $accountService = null;
 
-    private ?GenderService $gederService = null;
+    private ?GenderService $genderService = null;
 
     private ?MoodsService $moodsService = null;
 
@@ -48,18 +55,6 @@ class DefaultComponentFactory implements ComponentFactory
             "Account" => $this->buildAccountController(),
             "Connexion" => $this->buildConnexionController(),
             "Moods" => $this->buildMoodsController(),
-            default => throw new NoControllerAvailableForName($controller_name)
-        }
-    };
-
-    /**
-     * @param string $controller_name the name of the controller to instanciate
-     * @return mixed the controller
-     * @throws NoControllerAvailableForName when controller is not found
-     */
-    public function buildControllerByName(string $controller_name): mixed {
-        return match ($controller_name) {
-            "Home" => $this->buildHomeController(),
             default => throw new NoControllerAvailableForName($controller_name)
         };
     }
@@ -82,7 +77,7 @@ class DefaultComponentFactory implements ComponentFactory
      */
     private function buildHomeController(): HomeController
     {
-        return new HomeController($this->buildUsersService());
+        return new HomeController($this->buildGenderService());
     }
 
     /**
@@ -102,11 +97,11 @@ class DefaultComponentFactory implements ComponentFactory
     }
 
     /**
-     * @return HomeController
+     * @return MoodsController
      */
-    private function buildHomeController(): HomeController
+    private function buildMoodsController(): MoodsController
     {
-        return new ConnexionController($this->buildGenderService());
+        return new MoodsController($this->buildMoodsService());
     }
 
     /**
@@ -141,4 +136,5 @@ class DefaultComponentFactory implements ComponentFactory
         }
         return $this->moodsService;
     }
+
 }
