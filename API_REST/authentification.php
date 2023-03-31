@@ -6,9 +6,9 @@ function authentification() {
 
         try{
             $pdo = getPDO();
-            $sql = "SELECT * FROM compte WHERE Mot_de_passe = :mdp";
+            $sql = "SELECT ID_Compte FROM compte WHERE APIKEY = :APIKEY";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute(['mdp' => $apiKey]);
+            $stmt->execute(['APIKEY' => $apiKey]);
             $nb = $stmt->rowCount();
 
             if($nb < 1){
@@ -31,7 +31,7 @@ function authentification() {
 function verifConnexion($email, $mdp){
     try{
         $pdo = getPDO();
-        $sql = "SELECT Mot_de_passe, ID_Compte FROM compte WHERE Email = :email AND Mot_de_passe = :mdp";
+        $sql = "SELECT APIKEY FROM compte WHERE Email = :email AND Mot_de_passe = :mdp";
         $stmt = $pdo->prepare($sql);
         $mdp = md5($mdp);
         $stmt->execute(['email' => $email, 'mdp' => $mdp]);
@@ -39,11 +39,7 @@ function verifConnexion($email, $mdp){
         $resultat = $stmt->fetchAll();
 
         if($nb == 1){
-            foreach ($resultat as $key => $value) {
-                $infos['APIKEYDEMONAPPLI'] = $value["Mot_de_passe"];
-                $infos['ID'] = $value["ID_Compte"];
-            }
-            sendJSON($infos, 200);
+            sendJSON($resultat, 200);
         }else{
             $infos['Status'] = "KO";
             $infos['message'] = "Logins incorects.";

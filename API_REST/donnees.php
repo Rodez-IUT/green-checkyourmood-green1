@@ -2,8 +2,24 @@
 
     require_once("pdo.php");
 
-	function getHumeurs($idCompte) {
+    function getIdCompte(){
+        $apiKey = $_SERVER["HTTP_APIKEYDEMONAPI"];
+
+        try {
+            $pdo = getPDO();
+            $sql = "SELECT ID_Compte FROM compte WHERE APIKEY = :APIKEY";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(['APIKEY' => $apiKey]);
+            $id = $stmt->fetchAll();
+
+            return $id[0]['ID_Compte'];
+        } catch(PDOException $e){
+        }
+    }
+
+	function getHumeurs() {
 		// Retourne les 5 dernieres humeurs de l'utilisateur
+        $idCompte = getIdCompte();
 		try {
 			$pdo=getPDO();
 			$sql = "SELECT ID_Histo, ID_Hum, Libelle, Emoji, Date_Hum, Date_Ajout, Informations
@@ -25,7 +41,7 @@
 			sendJSON($humeurs, 200) ;
 		} catch(PDOException $e){
 			$infos['Statut'] = "KO";
-			$infos['message'] = $e->getMessage();
+			$infos['message'] = "ID : ".$idCompte;
 			sendJSON($infos, 500);
 		}
 	}
@@ -85,8 +101,7 @@
 
 	
 	function ajoutHumeur($donneesJson) {
-		if(!empty($donneesJson['ID_COMPTE'])
-			&& !empty($donneesJson['ID_HUMEUR']) 
+		if(!empty($donneesJson['ID_HUMEUR'])
 			&& !empty($donneesJson['DATE_HUMEUR'])
 			&& !empty($donneesJson['INFO'])
 		  ){
@@ -100,7 +115,8 @@
        			$stmt = $pdo->prepare($sql);
         		date_default_timezone_set('Europe/Paris');
         		$now = new DateTime();
-        		$stmt->execute(["idCompte" => $donneesJson['ID_COMPTE'],
+                $idCompte = getIdCompte();
+        		$stmt->execute(["idCompte" => $idCompte,
                         		"idHum" => $donneesJson['ID_HUMEUR'],
                         		"dateHum" => $donneesJson['DATE_HUMEUR'],
                         		"dateAjout" => $now->format("Y-m-d H:i"),
@@ -112,7 +128,7 @@
 				
 				// Retour des informations au client (statut + id créé)
 				$infos['Statut']="OK";
-				$infos['ID'] = "Humeur Inserer : ".$donneesJson['ID_HUMEUR']." pour l'utilisateur : ".$donneesJson['ID_COMPTE'];
+				$infos['ID'] = "Humeur Inserer : ".$donneesJson['ID_HUMEUR']." pour l'utilisateur : ".$idCompte;
 
 				sendJSON($infos, 201) ;
 			} catch(PDOException $e){

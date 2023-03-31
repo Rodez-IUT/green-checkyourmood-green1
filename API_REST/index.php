@@ -21,9 +21,8 @@
 					break;
 					case 'humeurs' : 
 						// Retourne les humeurs
-						if (isset($url[1])) {$idCompte=$url[1];} else {$idCompte="";}
                         authentification();
-						getHumeurs($idCompte);
+						getHumeurs();
 						break ;
 					case 'listeHumeurs' :
                         authentification();

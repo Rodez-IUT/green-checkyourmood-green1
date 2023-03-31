@@ -11,6 +11,7 @@ CREATE TABLE genre (
 
 -- Création de la table compte
 CREATE TABLE compte (
+    APIKEY VARCHAR(50) NOT NULL,
     ID_Compte INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     Nom VARCHAR(50) NOT NULL,
     Prenom VARCHAR(50) NOT NULL,
