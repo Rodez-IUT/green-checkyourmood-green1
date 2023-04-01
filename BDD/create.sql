@@ -26,8 +26,8 @@ CREATE TABLE compte (
 CREATE TABLE humeur (
     ID_Hum INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     Libelle VARCHAR(25) NOT NULL,
-    Emoji VARCHAR(250) NOT NULL
-);
+    Emoji varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Création de la table historique 
 CREATE TABLE historique (
