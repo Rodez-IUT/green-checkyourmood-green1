@@ -1,4 +1,4 @@
-lancer phpStan avec la config phpstan.neon
+lancer phpStan avec la config phpstan.neon --xdebug pour desactiver xDebug
 php ./app_CYM/lib/vendor/bin/phpstan --xdebug analyse -c ./phpstan.neon
 
 lancer les test sans coverage
