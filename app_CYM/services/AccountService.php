@@ -2,14 +2,16 @@
 
 namespace services;
 
+use PDO;
+
 class AccountService {
 
     /**
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
-     * @param $idCompte id du compte dont l'on souhaite avoir les données
-     * @return $compte le compte rechercher
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param mixed $idCompte id du compte dont l'on souhaite avoir les données
+     * @return mixed $compte le compte rechercher
      */
-    public function findAccountById($pdo, $idCompte) {
+    public function findAccountById(PDO $pdo, mixed $idCompte): mixed {
         $sql = "SELECT compte.ID_Compte, compte.Nom, compte.Prenom, compte.Date_de_naissance, compte.Code_Gen as Genre, compte.Mot_de_passe, compte.Email
                 FROM compte
                 WHERE compte.ID_Compte = :idCompte";
@@ -34,27 +36,26 @@ class AccountService {
     }
 
     /**
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
-     * @param $email du compte que l'on recherche
-     * @param $mdp mot de passe du compte rechercher
-     * @return $compte le compte rechercher ayant l'email et le mot de passe
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param string $email du compte que l'on recherche
+     * @param string $mdp mot de passe du compte rechercher
+     * @return mixed $compte le compte rechercher ayant l'email et le mot de passe
      */
-    public function findAccountIdByEmailAndMDP($pdo, $email, $mdp) {
+    public function findAccountIdByEmailAndMDP(PDO $pdo, string $email, string $mdp): mixed {
         $sql = "SELECT compte.ID_Compte FROM compte
                 WHERE compte.Email = :email
                 AND compte.Mot_de_passe = :mdp";
         $stmt = $pdo->prepare($sql);
         $stmt->execute(['email' => $email, 'mdp' => $mdp]);
-        $compte = $stmt->fetch();
-        return $compte;
+        return $stmt->fetch();
     }
 
     /**
-     * supprime un compte et toutes les données liées à ce compte
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
-     * @param $idCompte id du compte dont l'on supprimer
+     * Supprime un compte et toutes les données liées à ce compte
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param int $idCompte id du compte que l'on supprime
      */
-    public function deleteAccountById($pdo, $idCompte) {
+    public function deleteAccountById(PDO $pdo, int $idCompte): void {
         //suppresion des humeurs de ce compte
         $sql = "DELETE FROM historique WHERE Code_Compte = :idCompte";
         $stmt = $pdo->prepare($sql);
@@ -67,11 +68,11 @@ class AccountService {
 
     /**
      * Modifie le nom d'un compte
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
-     * @param $idCompte id du compte dont l'on souhaite modifier les données
-     * @param $nom le nouveau nom que l'on souhaite avoir
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param int $idCompte id du compte dont l'on souhaite modifier les données
+     * @param string $nom le nouveau nom que l'on souhaite avoir
      */
-    public function updateLastNameById($pdo, $idCompte, $nom) {
+    public function updateLastNameById(PDO $pdo, int $idCompte, string $nom): void {
         $sql = "UPDATE compte SET Nom = :nom WHERE ID_Compte = :idCompte";
         $stmt = $pdo->prepare($sql);
         $stmt->execute(["nom" => $nom, "idCompte" => $idCompte]);
@@ -79,11 +80,11 @@ class AccountService {
 
     /**
      * Modifie le prenom d'un compte
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
-     * @param $idCompte id du compte dont l'on souhaite modifier les données
-     * @param $prenom le nouveau prenom que l'on souhaite avoir
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param int $idCompte id du compte dont l'on souhaite modifier les données
+     * @param string $prenom le nouveau prenom que l'on souhaite avoir
      */
-    public function updateFirstNameById($pdo, $idCompte, $prenom) {
+    public function updateFirstNameById(PDO $pdo, int $idCompte, string $prenom): void {
         $sql = "UPDATE compte SET Prenom = :prenom WHERE ID_Compte = :idCompte";
         $stmt = $pdo->prepare($sql);
         $stmt->execute(["prenom" => $prenom, "idCompte" => $idCompte]);
@@ -91,11 +92,11 @@ class AccountService {
 
     /**
      * Modifie l'email d'un compte
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
-     * @param $idCompte id du compte dont l'on souhaite modifier les données
-     * @param $email le nouveau email que l'on souhaite avoir
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param int $idCompte id du compte dont l'on souhaite modifier les données
+     * @param string $email le nouvel email que l'on souhaite avoir
      */
-    public function updateEmailById($pdo, $idCompte, $email) {
+    public function updateEmailById(PDO $pdo, int $idCompte, string $email): void {
         $sql = "UPDATE compte SET Email = :email WHERE ID_Compte = :idCompte";
         $stmt = $pdo->prepare($sql);
         $stmt->execute(["email" => $email, "idCompte" => $idCompte]);
@@ -103,11 +104,11 @@ class AccountService {
 
     /**
      * Modifie le mot de passe d'un compte
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
-     * @param $idCompte id du compte dont l'on souhaite modifier les données
-     * @param $mdp le nouveau mot de passe que l'on souhaite avoir
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param int $idCompte id du compte dont l'on souhaite modifier les données
+     * @param string $mdp le nouveau mot de passe que l'on souhaite avoir
      */
-    public function updateMDPById($pdo, $idCompte, $mdp) {
+    public function updateMDPById(PDO $pdo, int $idCompte, string $mdp): void {
         $sql = "UPDATE compte SET Mot_de_passe = :mdp WHERE ID_Compte = :idCompte";
         $stmt = $pdo->prepare($sql);
         $stmt->execute(["mdp" => md5($mdp), "idCompte" => $idCompte]);
@@ -115,11 +116,11 @@ class AccountService {
 
     /**
      * Modifie la date de naissaince d'un compte
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
-     * @param $idCompte id du compte dont l'on souhaite modifier les données
-     * @param $dateNaissance la nouvelle date de naissance que l'on souhaite avoir
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param int $idCompte id du compte dont l'on souhaite modifier les données
+     * @param ?string $dateNaissance la nouvelle date de naissance que l'on souhaite avoir
      */
-    public function updateDateNaissanceById($pdo, $idCompte, $dateNaissance) {
+    public function updateDateNaissanceById(PDO $pdo, int $idCompte, ?string $dateNaissance): void {
         $sql = "UPDATE compte SET Date_de_naissance = :dateNaissance WHERE ID_Compte = :idCompte";
         $stmt = $pdo->prepare($sql);
         $stmt->execute(["dateNaissance" => $dateNaissance, "idCompte" => $idCompte]);
@@ -127,11 +128,11 @@ class AccountService {
 
     /**
      * Modifie le genre d'un compte
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
-     * @param $idCompte id du compte dont l'on souhaite modifier les données
-     * @param $idGenre l'id du genre que l'on souhaite avoir
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param int $idCompte id du compte dont l'on souhaite modifier les données
+     * @param ?string $idGenre l'id du genre que l'on souhaite avoir
      */
-    public function updateGenreById($pdo, $idCompte, $idGenre) {
+    public function updateGenreById(PDO $pdo, int $idCompte, ?string $idGenre): void {
         if ($idGenre == "Aucun") {
             $idGenre = null;
         }
@@ -142,15 +143,15 @@ class AccountService {
 
     /**
      * Insere un compte dans la base de données avec le genre
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
-     * @param $nom le nom du compte que l'on souhaite insérer
-     * @param $prenom le prenom du compte que l'on souhaite insérer
-     * @param $email l'email du compte que l'on souhaite insérer
-     * @param $mdp le mot de passe du compte que l'on souhaite insérer
-     * @param $datenais la date de naissance du compte que l'on souhaite insérer
-     * @param $genre l'id du genre que l'on souhaite insérer
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param ?string $nom le nom du compte que l'on souhaite insérer
+     * @param ?string $prenom le prenom du compte que l'on souhaite insérer
+     * @param ?string $mail
+     * @param ?string $MDP
+     * @param ?string $datenais la date de naissance du compte que l'on souhaite insérer
+     * @param ?string $genre l'id du genre que l'on souhaite insérer
      */
-    public function accountInsertion($pdo, $nom, $prenom, $mail, $MDP, $datenais, $genre){
+    public function accountInsertion(PDO $pdo, ?string $nom, ?string $prenom, ?string $mail, ?string $MDP, ?string $datenais, ?string $genre): void {
         $sql = "INSERT INTO compte (Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES (:leNom, :lePrenom, :laDateDeNaissance, :leGenre, :leMDP, :leMail)";
         $stmt = $pdo->prepare($sql);
         $MDP = md5($MDP);
@@ -165,14 +166,14 @@ class AccountService {
 
     /**
      * Insere un compte dans la base de données sans le genre
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
-     * @param $nom le nom du compte que l'on souhaite insérer
-     * @param $prenom le prenom du compte que l'on souhaite insérer
-     * @param $email l'email du compte que l'on souhaite insérer
-     * @param $mdp le mot de passe du compte que l'on souhaite insérer
-     * @param $datenais la date de naissance du compte que l'on souhaite insérer
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param ?string $nom le nom du compte que l'on souhaite insérer
+     * @param ?string $prenom le prenom du compte que l'on souhaite insérer
+     * @param ?string $mail
+     * @param ?string $MDP
+     * @param ?string $datenais la date de naissance du compte que l'on souhaite insérer
      */
-    public function accountInsertionGenre($pdo, $nom, $prenom, $mail, $MDP, $datenais){
+    public function accountInsertionGenre(PDO $pdo, ?string $nom, ?string $prenom, ?string $mail, ?string $MDP, ?string $datenais): void{
         $sql = "INSERT INTO compte (Nom, Prenom, Date_de_naissance, Mot_de_passe, Email) VALUES (:leNom, :lePrenom, :laDateDeNaissance, :leMDP, :leMail)";
         $stmt = $pdo->prepare($sql);
         $MDP = md5($MDP);
@@ -185,26 +186,25 @@ class AccountService {
     }
 
     /**
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
-     * @param $mail le mail que l'on souhaite tester s'il existe
-     * @return $row le nombre de ligne ayant comme mail le mail indiqué
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param ?string $mail le mail que l'on souhaite tester s'il existe
+     * @return int $row le nombre de ligne ayant comme mail le mail indiqué
      */
-    public function duplicateAccount($pdo, $mail){
+    public function duplicateAccount(PDO $pdo, ?string $mail): int{
         $sql = "SELECT ID_COMPTE FROM compte WHERE Email = :mail";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam("mail", $mail);
         $stmt->execute();
-        $row = $stmt->rowCount();
-        return $row;
+        return $stmt->rowCount();
     }
 
     /**
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
-     * @param $idCompte id du compte que l'on teste
-     * @param $mdp le mot de passe à tester
-     * @return true si le mot de passe correspond false sinon
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param int $idCompte id du compte que l'on teste
+     * @param ?string $mdp le mot de passe à tester
+     * @return bool true si le mot de passe correspond, false sinon
      */
-    public function verifMdp($pdo, $idCompte, $mdp) {
+    public function verifMdp(PDO $pdo, int $idCompte, ?string $mdp): bool {
         $mdp = md5($mdp);
         $stmt = $pdo->prepare("SELECT * FROM compte WHERE Mot_de_passe = :mdp AND ID_Compte = :idCompte");
         $stmt->execute(["mdp" => $mdp,
@@ -213,11 +213,11 @@ class AccountService {
     }
 
     //instance static de ce service
-    private static $defaultAccountService;
+    private static AccountService $defaultAccountService;
     /**
-     * @return mixed instance static de ce service
+     * @return AccountService instance static de ce service
      */
-    public static function getDefaultAccountService() {
+    public static function getDefaultAccountService(): AccountService {
         if (AccountService::$defaultAccountService == null) {
             AccountService::$defaultAccountService = new AccountService();
         }

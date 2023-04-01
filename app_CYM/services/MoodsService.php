@@ -3,17 +3,20 @@
 namespace services;
 
 use DateTime;
+use PDO;
 use PDOException;
+use PDOStatement;
 
 class MoodsService {
 
     /**
-     * @param $pdo instance de PDO afin de rechercher dans la base de données
-     * @return $stmt toutes les humeurs enregistrées dans la base de données
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @return array $humeurs toutes les humeurs enregistrées dans la base de données
      */
-    public function getAllMoods($pdo) {
+    public function getAllMoods(PDO $pdo): array {
         $sql = "SELECT ID_Hum, Libelle, Emoji FROM humeur";
-        $stmt = $pdo->query($sql);
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
         $humeurs = [];
         while ($row = $stmt->fetch()) {
             $humeurs[] = $row;
@@ -22,13 +25,13 @@ class MoodsService {
     }
 
     /**
-     * @param $pdo instance de PDO afin de rechercher dans la base de données
-     * @param $idCompte id du compte dont l'on souhaite obtenir les humeurs
-     * @param $nbHum le nombre d'humeur souhaité
-     * @return $stmt toutes les humeurs enregistrées pour le compte ayant 
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param int $idCompte id du compte dont l'on souhaite obtenir les humeurs
+     * @param int $nbHum le nombre d'humeurs souhaité
+     * @return PDOStatement $stmt toutes les humeurs enregistrées pour le compte ayant
      *         l'id $idCompte dans la base de données
      */
-    public function getLastMoodsByIdCompte($pdo, $idCompte, $nbHum) {
+    public function getLastMoodsByIdCompte(PDO $pdo, int $idCompte, int $nbHum): PDOStatement {
         $sql = "SELECT ID_Histo, ID_Hum, Libelle, Emoji, Date_Hum, Date_Ajout, Informations
                 FROM historique
                 JOIN humeur
@@ -43,15 +46,15 @@ class MoodsService {
     }
 
     /**
-     * @param $pdo instance de PDO afin de rechercher dans la base de données
-     * @param $idCompte id du compte dont l'on souhaite obtenir les humeurs
-     * @param $page numéro de la page correspondante
-     * @param $nbHumPage nombre d'humeur que l'on veut sur la page
-     * @return $stmt toutes les humeurs enregistrées pour le compte ayant 
-     *         l'id $idCompte dans la base de données
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param int $idCompte id du compte dont l'on souhaite obtenir les humeurs
+     * @param string|int $page numéro de la page correspondante
+     * @param int $nbHumPage nombre d'humeurs que l'on veut sur la page
+     * @return PDOStatement $stmt toutes les humeurs enregistrées pour le compte ayant
+     *                      l'id $idCompte dans la base de données
      */
-    public function getMoodsByIdCompteByPage($pdo, $idCompte, $page, $nbHumPage) {
-        $offset = ($page - 1) * $nbHumPage;
+    public function getMoodsByIdCompteByPage(PDO $pdo, int $idCompte, string|int $page, int $nbHumPage): PDOStatement {
+        $offset = ((int)$page - 1) * $nbHumPage;
         $sql = "SELECT ID_Histo, ID_Hum, Libelle, Emoji, Date_Hum, Date_Ajout, Informations
                 FROM historique
                 JOIN humeur
@@ -68,12 +71,11 @@ class MoodsService {
     }
 
     /**
-     * @param $pdo instance de PDO afin de rechercher dans la base de données
-     * @param $idCompte id du compte dont l'on souhaite obtenir le nombre d'humeurs
-     * @return $stmt nombre d'humeurs enregistrées pour le compte ayant 
-     *         l'id $idCompte dans la base de données
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param int $idCompte id du compte dont l'on souhaite obtenir le nombre d'humeurs
+     * @return mixed nombre d'humeurs enregistrées pour le compte ayant l'id $idCompte dans la base de données
      */
-    public function getNbHum($pdo, $idCompte) {
+    public function getNbHum(PDO $pdo, int $idCompte): mixed {
         $sql = "SELECT COUNT(*) AS nbHum FROM historique WHERE Code_Compte = :idCompte";
         $stmt = $pdo->prepare($sql);
         $stmt->execute(["idCompte" => $idCompte]);
@@ -82,14 +84,14 @@ class MoodsService {
     }
 
     /**
-     * ajoute une humeur pour un compte
-     * @param $pdo instance de PDO afin de rechercher dans la base de données
-     * @param $idCompte id du compte dont l'on souhaite ajouter une humeur
-     * @param $idHum id de l'humeur que l'on souhaite attribuer 
-     * @param $dateHum la date de l'humeur que l'on souhaite attribuer
-     * @param $info les infos complémentaires sur l'humeur
+     * Ajoute une humeur pour un compte
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param int $idCompte id du compte dont l'on souhaite ajouter une humeur
+     * @param string $idHum id de l'humeur que l'on souhaite attribuer
+     * @param string $dateHum la date de l'humeur que l'on souhaite attribuer
+     * @param string $info les infos complémentaires sur l'humeur
      */
-    public function addMood($pdo, $idCompte, $idHum, $dateHum, $info) {
+    public function addMood(PDO $pdo, int $idCompte, string $idHum, string $dateHum, string $info): void {
         $sql = "INSERT INTO historique(Code_Compte, Code_hum, Date_Hum, Date_Ajout, Informations)
                 VALUES (:idCompte, :idHum, :dateHum, :dateAjout, :info)";
         try {
@@ -107,14 +109,14 @@ class MoodsService {
     }
 
     /**
-     * modifie une humeur pour un compte
-     * @param $pdo instance de PDO afin de rechercher dans la base de données
-     * @param $idHisto id de l'humeur dans l'historique de toute les humeurs que l'on souhaite modifier
-     * @param $idHum id de l'humeur que l'on souhaite attribuer 
-     * @param $dateHum la date de l'humeur que l'on souhaite attribuer
-     * @param $info les infos complémentaires sur l'humeur
+     * Modifie une humeur pour un compte
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param string $idHisto id de l'humeur dans l'historique de toute les humeurs que l'on souhaite modifier
+     * @param string $idHum id de l'humeur que l'on souhaite attribuer
+     * @param string $dateHum la date de l'humeur que l'on souhaite attribuer
+     * @param string $info les infos complémentaires sur l'humeur
      */
-    public function editMoodByIdHisto($pdo, $idHisto, $idHum, $dateHum, $info) {
+    public function editMoodByIdHisto(PDO $pdo, string $idHisto, string $idHum, string $dateHum, string $info): void {
         $sql = "UPDATE historique 
                 SET Code_hum = :idHum, Date_Hum = :dateHum, Informations = :info
                 WHERE ID_Histo = :idHisto";
@@ -130,25 +132,24 @@ class MoodsService {
     }
 
     /**
-     * modifie une humeur pour un compte
-     * @param $pdo instance de PDO afin de rechercher dans la base de données
-     * @param $idHisto id de l'humeur dans l'historique de toute les humeurs que l'on souhaite modifier
+     * Modifie une humeur pour un compte
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param string $idHisto id de l'humeur dans l'historique de toutes les humeurs que l'on souhaite modifier
      */
-    public function deleteMoodByIdHisto($pdo, $idHisto) {
+    public function deleteMoodByIdHisto(PDO $pdo, string $idHisto): void {
         $sql = "DELETE FROM historique
                 WHERE ID_Histo = :idHisto";
-        
         $stmt = $pdo->prepare($sql);
         $stmt->execute(["idHisto" => $idHisto]);
     }
 
     /**
-     * @param $pdo instance de PDO afin de rechercher dans la base de données
-     * @param $idCompte id du compte dont l'on recherche les données
-     * @param $period periode ou l'on cherche les humeurs
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param int $idCompte id du compte dont l'on recherche les données
+     * @param string $period periode ou l'on cherche les humeurs
      * @return array tableau des humeurs et tableau de leur occurence
      */
-    public function getDiagramData($pdo, $idCompte, $period) {
+    public function getDiagramData(PDO $pdo, int $idCompte, string $period): array {
         $stmt = $pdo->query("SELECT ID_Hum, Libelle FROM humeur");
         date_default_timezone_set('Europe/Paris');
         $now = new DateTime();
@@ -191,13 +192,13 @@ class MoodsService {
     }
 
     /**
-     * @param $pdo instance de PDO afin de rechercher dans la base de données
-     * @param $idCompte id du compte dont l'on recherche les données
-     * @param $month le mois ou l'on recherche les humeurs
-     * @param $number le nombre de jour dans le mois
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @param int $idCompte id du compte dont l'on recherche les données
+     * @param string $month le mois ou l'on recherche les humeurs
+     * @param int $number le nombre de jour dans le mois
      * @return array de l'humeur la plus présente pour chaque jour
      */
-    public function getCalenderData($pdo, $idCompte, $month, $number) {
+    public function getCalenderData(PDO $pdo, int $idCompte, string $month, int $number): array {
         $emojiJour = [];
         for ($i = 1; $i <= $number; $i++) {
             if ($i < 10) {
@@ -236,9 +237,9 @@ class MoodsService {
     }
 
     //instance static de ce service
-    private static $defaultMoodsService;
+    private static MoodsService $defaultMoodsService;
     /**
-     * @return mixed instance static de ce service 
+     * @return MoodsService instance static de ce service
      */
     public static function getDefaultMoodsService() {
         if (MoodsService::$defaultMoodsService == null) {

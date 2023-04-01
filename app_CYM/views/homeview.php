@@ -72,7 +72,7 @@ use yasmf\HttpHelper;
                     </div>
                     <!-- formulaire -->
                     <form action="index.php" method="post" class="body-container-form">
-                        <input hidden name="controller" value="account">
+                        <input hidden name="controller" value="Account">
                         <input hidden name="action" value="createAccount">
                         <span>les champs suivit d'un * sont obligatoires</span>
 

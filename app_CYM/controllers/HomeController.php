@@ -18,7 +18,7 @@
         }
 
         /**
-         * @param $pdo instance de PDO afin de rechercher dans la base de données 
+         * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
          * @return View la vue de la page d'acceuil non authentifié
          */
         public function index(PDO $pdo): View{
@@ -34,7 +34,7 @@
         }
 
         /**
-         * @return View la vue de la page d'acceuil authentifié
+         * @return View la vue de la page d'accueil authentifié
          */
         public function homeForAccount(): View {
             session_start();

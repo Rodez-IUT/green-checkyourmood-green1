@@ -23,7 +23,7 @@ class AccountController {
     }
 
     /**
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
      * @return View la vue en charge du compte et des informations du compte
      */
     public function index(PDO $pdo): View {
@@ -37,7 +37,7 @@ class AccountController {
         session_write_close();
         //cherche le compte avec cet id
         $compte = $this->accountService->findAccountById($pdo, $idCompte);
-        //renvoie la liste des genre pour la modal modifier genre
+        //renvoie la liste des genres pour la modal modifier genre
         $genres = $this->genderService->findAllGenders($pdo);
         $view = new View("/views/accountview");
         $view->setVar("compte", $compte);
@@ -46,8 +46,8 @@ class AccountController {
     }
 
     /**
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
-     * @return View la vue de l'accueil après avoir supprimer le compte
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
+     * @return View la vue de l'accueil après avoir supprimé le compte
      */
     public function deleteAccountById(PDO $pdo): View {
         //récupere l'id
@@ -68,7 +68,7 @@ class AccountController {
     }
 
     /**
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
      * @return View la vue en charge du compte et des informations du compte
      */
     public function updateLastNameById(PDO $pdo): View {
@@ -81,9 +81,10 @@ class AccountController {
         }
         session_write_close();
         //recupere le nouveau nom du compte
-        $nom = htmlspecialchars(HttpHelper::getParam("modifNom"));
+        $nom = HttpHelper::getParam("modifNom");
+        if ($nom != null) $nom = htmlspecialchars($nom);
         //test si le nom est incorecte
-        if ($nom == null || $nom == "") {
+        if ($nom == null) {
             //renvoie la page compte en indiquant une erreur
             $view = $this->index($pdo);
             $view->setVar("errModifNom", true);
@@ -97,7 +98,7 @@ class AccountController {
     }
 
     /**
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
      * @return View la vue en charge du compte et des informations du compte
      */
     public function updateFirstNameById(PDO $pdo): View {
@@ -110,9 +111,12 @@ class AccountController {
         }
         session_write_close();
         //recupere le nouveau prenom du compte
-        $prenom = htmlspecialchars(HttpHelper::getParam("modifPrenom"));
+        $prenom = HttpHelper::getParam("modifPrenom");
+        if ($prenom != null) {
+            $prenom = htmlspecialchars($prenom);
+        }
         //test si le prenom est incorecte
-        if ($prenom == null || $prenom == "") {
+        if ($prenom == null) {
             //renvoie la page compte en indiquant une erreur
             $view = $this->index($pdo);
             $view->setVar("errModifPrenom", true);
@@ -126,7 +130,7 @@ class AccountController {
     }
 
     /**
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
      * @return View la vue en charge du compte et des informations du compte
      */
     public function updateEmailById(PDO $pdo): View {
@@ -139,9 +143,12 @@ class AccountController {
         }
         session_write_close();
         //recupere le nouveau mail du compte
-        $email = htmlspecialchars(HttpHelper::getParam("modifEmail"));
+        $email = HttpHelper::getParam("modifEmail");
+        if ($email != null) {
+            $email = htmlspecialchars($email);
+        }
         //test si l'email est incorecte
-        if ($email == null || $this->accountService->duplicateAccount($pdo, $email) != 0 || $email == "" || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if ($email == null || $this->accountService->duplicateAccount($pdo, $email) != 0 || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             //renvoie la page compte en indiquant une erreur
             $view = $this->index($pdo);
             $view->setVar("errModifEmail", true);
@@ -155,7 +162,7 @@ class AccountController {
     }
 
     /**
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
      * @return View la vue en charge du compte et des informations du compte
      */
     public function updateMDPById(PDO $pdo): View {
@@ -168,10 +175,20 @@ class AccountController {
         }
         session_write_close();
         //recupere le nouveau mdp du compte
-        $mdp = htmlspecialchars(HttpHelper::getParam("modifMdp"));
-        $oldMdp = htmlspecialchars(HttpHelper::getParam("oldMdp"));
+        $mdp = HttpHelper::getParam("modifMdp");
+        if ($mdp != null) {
+            $mdp = htmlspecialchars($mdp);
+        }
+        $oldMdp = HttpHelper::getParam("oldMdp");
+        if ($oldMdp != null) {
+            $oldMdp = htmlspecialchars($oldMdp);
+        }
         //test si le mdp est incorecte
-        if ($mdp == null || $mdp == "" || strlen($mdp) < 8 || $mdp != htmlspecialchars(HttpHelper::getParam("confirmModifMdp"))) {
+        $confirmModifMdp = HttpHelper::getParam("confirmModifMdp");
+        if ($confirmModifMdp != null) {
+            $confirmModifMdp = htmlspecialchars($confirmModifMdp);
+        }
+        if ($mdp == null || strlen($mdp) < 8 || $mdp != $confirmModifMdp) {
             //renvoie la page compte en indiquant une erreur
             $view = $this->index($pdo);
             $view->setVar("errModifMdp", true);
@@ -182,7 +199,7 @@ class AccountController {
             $view->setVar("errMdp", true);
             return $view;
         } else {
-            //renvoie la page compte après avoir modifier le compte
+            //renvoie la page compte après avoir modifié le compte
             $this->accountService->updateMDPById($pdo, $idCompte, $mdp);
             $view = $this->index($pdo);
             return $view;
@@ -190,7 +207,7 @@ class AccountController {
     }
 
     /**
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
      * @return View la vue en charge du compte et des informations du compte
      */
     public function updateDateNaissanceById(PDO $pdo): View {
@@ -203,18 +220,21 @@ class AccountController {
         }
         session_write_close();
         //recupere la nouvelle date de naissance du compte
-        $dateNaissance = htmlspecialchars(HttpHelper::getParam("modifDateNaissance"));
+        $dateNaissance = HttpHelper::getParam("modifDateNaissance");
+        if ($dateNaissance != null) {
+            $dateNaissance = htmlspecialchars($dateNaissance);
+        }
         if ($dateNaissance == "") {
             $dateNaissance = null;
         }
-        //renvoie la page compte après avoir modifier le compte
+        //renvoie la page compte après avoir modifié le compte
         $this->accountService->updateDateNaissanceById($pdo, $idCompte, $dateNaissance);
         $view = $this->index($pdo);
         return $view;
     }
 
     /**
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
+     * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
      * @return View la vue en charge du compte et des informations du compte
      */
     public function updateGenreById(PDO $pdo): View {
@@ -228,6 +248,9 @@ class AccountController {
         session_write_close();
         //recupere le nouveau genre du compte
         $idGenre = HttpHelper::getParam("modifGenre");
+        if ($idGenre != null) {
+            $idGenre = htmlspecialchars($idGenre);
+        }
         //test si le genre est incorecte
         if ($idGenre == "") {
             //renvoie la page compte en indiquant une erreur
@@ -243,10 +266,10 @@ class AccountController {
     }
 
     /**
-     * @param $data la données que l'on souhaite corriger
-     * @return mixed la donnée que l'on a conrigé
+     * @param string $data la donnée que l'on souhaite corriger
+     * @return string la donnée que l'on a corrigée
      */
-    public static function correction($data): mixed {
+    public static function correction(string $data): string {
         //supprime les caractères invisibles en début et fin de chaine
         $data = trim($data);
         // supprime les antislashs de la chaine
@@ -257,22 +280,20 @@ class AccountController {
     }
 
     /**
-     * @param $data donnée que l'on souhaite vérifier
+     * @param ?string $data donnée que l'on souhaite vérifier
      * @return bool true si $data ok false sinon
      */
-    public static function verification($data): bool {
-        $verif = $data != null && $data != "";
-        return $verif;
+    public static function verification(?string $data): bool {
+        return $data != null && $data != "";
     }
 
     /**
-     * @param $data donnée que l'on souhaite comparé
-     * @param $donnes donnée que l'on souhaite comparé
+     * @param $data donnée que l'on souhaite comparer
+     * @param $donnes donnée que l'on souhaite comparer
      * @return bool true si $data = $donnes, false sinon
      */
     public static function equal($data, $donnes): bool {
-        $verif = $data == $donnes;
-        return $verif;
+        return $data == $donnes;
     }
 
     /**
@@ -280,13 +301,26 @@ class AccountController {
      * @return View la page d'accueil en fonction des circonstances
      */
     public function createAccount(PDO $pdo): View {
-        $nom = htmlspecialchars(HttpHelper::getParam('nom'));
-        $prenom = htmlspecialchars(HttpHelper::getParam('prenom'));
-        $email = htmlspecialchars(HttpHelper::getParam('mail'));
-        $MDP = htmlspecialchars(HttpHelper::getParam('MDP'));
-        $MDPC = htmlspecialchars(HttpHelper::getParam('MDPC'));
-        $datenais = htmlspecialchars(HttpHelper::getParam('datenais'));
-        $genre = htmlspecialchars(HttpHelper::getParam('genre'));
+        $nom = HttpHelper::getParam("nom");
+        if ($nom != null) $nom = htmlspecialchars($nom);
+
+        $prenom = HttpHelper::getParam("prenom");
+        if ($prenom != null) $prenom = htmlspecialchars($prenom);
+
+        $email = HttpHelper::getParam("mail");
+        if ($email != null) $email = htmlspecialchars($email);
+
+        $MDP = HttpHelper::getParam("MDP");
+        if ($MDP != null) $MDP = htmlspecialchars($MDP);
+
+        $MDPC = HttpHelper::getParam("MDPC");
+        if ($MDPC != null) $MDPC = htmlspecialchars($MDPC);
+
+        $datenais = HttpHelper::getParam("datenais");
+        if ($datenais != null) $datenais = htmlspecialchars($datenais);
+
+        $genre = HttpHelper::getParam("genre");
+        if ($genre != null) $genre = htmlspecialchars($genre);
 
         if ($datenais == '') {
             $datenais = null;

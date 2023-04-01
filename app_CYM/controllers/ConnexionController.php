@@ -30,12 +30,19 @@ class ConnexionController {
      * @return View la vue de la connexion en cas d'echec, sinon la page des humeurs
      */
     public function logInAction(PDO $pdo): View {
-        $email = htmlspecialchars(HttpHelper::getParam('Email'));
-        $mdp = htmlspecialchars(HttpHelper::getParam('mot_de_passe'));
+        $email = HttpHelper::getParam('Email');
+        if ($email != null) {
+            $email = htmlspecialchars($email);
+            $email = AccountController::correction($email);
+        }
+        $mdp = HttpHelper::getParam('mot_de_passe');
+        if ($mdp != null) {
+            $mdp = htmlspecialchars($mdp);
+            $mdp = AccountController::correction($mdp);
+            $mdp = md5($mdp);
+        }
 
-        $email = AccountController::correction($email);
-        $mdp = AccountController::correction($mdp);
-        $mdp = md5($mdp);
+
         if (empty($email) || empty($mdp)) {
             $view = new View("/views/connexion");
             $view->setVar("errLogInAccount", true);
