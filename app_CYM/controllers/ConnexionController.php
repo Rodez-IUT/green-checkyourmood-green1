@@ -2,6 +2,7 @@
 
 namespace controllers;
 
+use PDO;
 use services\AccountService;
 use yasmf\HttpHelper;
 use yasmf\View;
@@ -18,18 +19,17 @@ class ConnexionController {
     }
 
     /**
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
      * @return View la vue en charge de la connexion
      */
-    public function index($pdo) {
+    public function index(): View {
         return new View("/views/connexion");
     }
 
     /**
-     * @param $pdo instance de PDO afin de rechercher dans la base de données 
+     * @param $pdo instance de PDO afin de rechercher dans la base de données
      * @return View la vue de la connexion en cas d'echec, sinon la page des humeurs
      */
-    public function logInAction($pdo) {
+    public function logInAction(PDO $pdo): View {
         $email = htmlspecialchars(HttpHelper::getParam('Email'));
         $mdp = htmlspecialchars(HttpHelper::getParam('mot_de_passe'));
 

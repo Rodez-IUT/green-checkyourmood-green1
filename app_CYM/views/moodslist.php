@@ -90,7 +90,8 @@
             <!-- Liste des humeurs -->
             <div class="row align">
                 <?php
-                    while (($hum = $histoHum->fetch())) { 
+                    if (isset($histoHum)) {
+                        while (($hum = $histoHum->fetch())) {
                 ?>
                     <div class="col-md-4 align">
                         <button class="humeurElement" data-bs-toggle="modal" data-bs-target="#info<?php echo $hum["ID_Histo"]?>">
@@ -109,38 +110,40 @@
                                 <span class="infosComplement title-lvl4">
                                     <?php echo $hum["Informations"] == null ? "Cette humeur ne comporte pas d'informations complémentaires" : $hum["Informations"]?>
                                 </span><br>
-                                <?php 
+                                <?php
                                 $dateHum = new DateTime($hum["Date_Hum"]);
                                 $now = new DateTime();
                                 $oneDayAgo = new DateTime();
                                 $dateInterval = new DateInterval("P1D");
                                 $oneDayAgo->sub($dateInterval);
-                                if ($dateHum <= $now && $dateHum >= $oneDayAgo) { 
+                                if ($dateHum <= $now && $dateHum >= $oneDayAgo) {
                                 ?>
                                     <form action="index.php" method="post">
                                         <input type="hidden" name="controller" value="Moods">
                                         <input type="hidden" name="idHisto" value="<?php echo $hum["ID_Histo"];?>">
-                                        <input type="hidden" name="page" value="<?php echo $page;?>">
+                                        <input type="hidden" name="page" value="<?php if (isset($page)) { echo $page; } ?>">
                                         <div class="separateurModalHum"></div>
                                         <span class="title-lvl3">Vous pouvez modifier cette humeur</span><br><br>
                                         <span class="title-lvl4 gauche">Libellé :</span>
                                         <select name="humeurModif" class="form-select input_modif_text">
                                             <option value="">Sélectionner une humeur</option>
                                             <?php
-                                                foreach($humeurs as $h) {
-                                                    echo "<option value=".$h["ID_Hum"];
-                                                    if ($h["ID_Hum"] == $hum["ID_Hum"]) {
-                                                        echo " selected";
+                                                if (isset($humeurs)) {
+                                                    foreach($humeurs as $h) {
+                                                        echo "<option value=".$h["ID_Hum"];
+                                                        if ($h["ID_Hum"] == $hum["ID_Hum"]) {
+                                                            echo " selected";
+                                                        }
+                                                        echo ">".$h["Libelle"]."</option>";
                                                     }
-                                                    echo ">".$h["Libelle"]."</option>";
                                                 }
                                             ?>
                                         </select>
                                         <br>
                                         <span class="title-lvl4 gauche">Date et heure :</span>
-                                        <input class="form-control input_modif_text" type="datetime-local" name="dateHum" 
-                                        value="<?php echo date("Y-m-d\TH:i", strtotime($hum["Date_Hum"]));?>" 
-                                        max="<?php echo date("Y-m-d\TH:i", strtotime($hum["Date_Ajout"]));?>" 
+                                        <input class="form-control input_modif_text" type="datetime-local" name="dateHum"
+                                        value="<?php echo date("Y-m-d\TH:i", strtotime($hum["Date_Hum"]));?>"
+                                        max="<?php echo date("Y-m-d\TH:i", strtotime($hum["Date_Ajout"]));?>"
                                         min="<?php $dateInterval = new DateInterval("P1D");
                                                 $dateAjout = new DateTime($hum["Date_Ajout"]);
                                                 $dateAjout->sub($dateInterval);
@@ -170,12 +173,14 @@
                         </div>
                     </div>
                     <!-- Fin modal infos complémentaires et options modifier et supprimer si possible -->
-                <?php }?>
+                <?php }
+                } ?>
             </div>
             <!-- Bouton de navigation -->
             <div class="row nav_moodsList">
                 <?php
-                    if ($page != 1) {
+                    if (isset($page)) {
+                        if ($page != 1) {
                 ?>
                 <!-- Bouton debut -->
                 <form class="nav_element" action="index.php" method="post">
@@ -190,25 +195,29 @@
                 <form class="nav_element" action="index.php" method="post">
                     <input type="hidden" name="controller" value="Moods">
                     <input type="hidden" name="action" value="moodsList">
-                    <input type="hidden" name="page" value="<?php echo $page - 1?>">
+                    <input type="hidden" name="page" value="<?php echo $page - 1;?>">
                     <button type="submit">
                         <i class="fa-solid fa-caret-left icon_nav_moodsList"></i>
                     </button>
                 </form>
-                <?php
-                    }
-                ?>
-                <?php
-                    if ($page > 3) {
-                ?>
-                <!-- 3 petits points -->
-                ...
-                <?php
-                    }
-                ?>
-                <?php
-                    if ($page > 2) {
-                ?>
+                    <?php
+                        }
+
+                    ?>
+                    <?php
+
+                        if ($page > 3) {
+                    ?>
+                    <!-- 3 petits points -->
+                    ...
+                    <?php
+                        }
+
+                    ?>
+                    <?php
+
+                        if ($page > 2) {
+                    ?>
                 <!-- Bouton num -->
                 <form class="nav_element" action="index.php" method="post">
                     <input type="hidden" name="controller" value="Moods">
@@ -219,10 +228,10 @@
                     </button>
                 </form>
                 <?php
-                    }
+                        }
                 ?>
                 <?php
-                    if ($page > 1) {
+                        if ($page > 1) {
                 ?>
                 <!-- Bouton num -->
                 <form class="nav_element" action="index.php" method="post">
@@ -234,7 +243,7 @@
                     </button>
                 </form>
                 <?php
-                    }
+                        }
                 ?>
                 <!-- Bouton num active -->
                 <form class="nav_element" action="index.php" method="post">
@@ -246,19 +255,21 @@
                     </button>
                 </form>
                 <?php
-                    if ($page + 1 <= $nbPage) {
+                    }
+                    if (isset($nbPage) && isset($page)) {
+                        if ($page + 1 <= $nbPage) {
                 ?>
                 <!-- Bouton num -->
                 <form class="nav_element" action="index.php" method="post">
                     <input type="hidden" name="controller" value="Moods">
                     <input type="hidden" name="action" value="moodsList">
-                    <input type="hidden" name="page" value="<?php echo $page + 1?>">
+                    <input type="hidden" name="page" value="<?php echo $page + 1 ?>">
                     <button type="submit">
-                        <span class="icon_nav_moodsList"><?php echo $page + 1?></span>
+                        <span class="icon_nav_moodsList"><?php echo $page + 1 ?></span>
                     </button>
                 </form>
                 <?php
-                    }
+                        }
                 ?>
                 <?php
                     if ($page + 2 <= $nbPage) {
@@ -274,6 +285,7 @@
                 </form>
                 <?php
                     }
+
                 ?>
                 <?php
                     if ($page + 3 <= $nbPage) {
@@ -305,6 +317,7 @@
                     </button>
                 </form>
                 <?php
+                    }
                     }
                 ?>
             </div>

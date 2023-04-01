@@ -1,7 +1,8 @@
 parameters:
-	level: 9
+	level: max
 	paths:
 		- app_CYM
 	excludePaths:
 	    - app_CYM/bootstrap
 	    - app_CYM/lib
+	    - app_CYM/backup

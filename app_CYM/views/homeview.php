@@ -185,12 +185,14 @@ use yasmf\HttpHelper;
                             <select name="genre" class="formulaire1 form-select">
                                 <option value=null>Aucun</option>
                                 <?php
-                                    while ($row = $genres->fetch()) {
-                                        echo "<option value=".$row["ID_Gen"];
-                                        if (HttpHelper::getParam("genre") == $row["ID_Gen"]) {
-                                            echo " selected";
+                                    if (isset($genres)) {
+                                        while ($row = $genres->fetch()) {
+                                            echo "<option value=".$row["ID_Gen"];
+                                            if (HttpHelper::getParam("genre") == $row["ID_Gen"]) {
+                                                echo " selected";
+                                            }
+                                            echo">".$row["Nom"]."</option>";
                                         }
-                                        echo">".$row["Nom"]."</option>";
                                     }
                                 ?>
                             </select>

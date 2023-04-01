@@ -67,7 +67,9 @@ class DefaultComponentFactory implements ComponentFactory
     public function buildServiceByName(string $service_name): mixed
     {
         return match($service_name) {
-            "Users" => $this->buildUsersService(),
+            "Account" => $this->buildAccountService(),
+            "Gender" => $this->buildGenderService(),
+            "Moods" => $this->buildMoodsService(),
             default => throw new NoServiceAvailableForName($service_name)
         };
     }

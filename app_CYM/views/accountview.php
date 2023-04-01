@@ -1,4 +1,8 @@
-<?php $idCompte = $compte["ID_Compte"]; ?>
+<?php
+    if (isset($compte)) {
+        $idCompte = $compte["ID_Compte"];
+    }
+?>
 <!DOCTYPE html>
 <html lang="fr">
     <head>
@@ -84,7 +88,7 @@
             <!-- Titre principale -->
             <div class="row">
                 <div class="col-md-12 title-lvl1">
-                    <span>Bonjour <?php echo $compte["Prenom"]." ".$compte["Nom"];?></span>
+                    <span>Bonjour <?php if (isset($compte)) { echo $compte["Prenom"]." ".$compte["Nom"]; }?></span>
                 </div>
             </div>
 
@@ -187,7 +191,7 @@
                         <!-- Info -->
                         <div>
                             <span class="info_name">Nom :</span></br>
-                            <span class="info"><?php echo $compte["Nom"];?></span>
+                            <span class="info"><?php if (isset($compte)) { echo $compte["Nom"];}?></span>
                         </div>
                         <!-- Bouton modifier -->
                             <button class="button_modifier" data-bs-toggle="modal" data-bs-target="#modifNom">
@@ -204,7 +208,7 @@
                         <!-- Info -->
                         <div>
                             <span class="info_name">Prénom :</span></br>
-                            <span class="info"><?php echo $compte["Prenom"];?></span>
+                            <span class="info"><?php if (isset($compte)) { echo $compte["Prenom"]; }?></span>
                         </div>
                         <!-- Bouton modifier -->
                         <button class="button_modifier" data-bs-toggle="modal" data-bs-target="#modifPrenom">
@@ -221,7 +225,7 @@
                         <!-- Info -->
                         <div>
                             <span class="info_name">Email :</span></br>
-                            <span class="info"><?php echo $compte["Email"];?></span>
+                            <span class="info"><?php if (isset($compte)) { echo $compte["Email"]; }?></span>
                         </div>
                         <!-- Bouton modifier -->
                             <button class="button_modifier" data-bs-toggle="modal" data-bs-target="#modifEmail">Modifier</button>
@@ -251,12 +255,14 @@
                         <!-- Info -->
                         <div>
                             <span class="info_name">Date de naissance :</span></br>
-                            <span class="info"><?php 
-                            if ($compte["Date_de_naissance"] == null) {
-                                echo "Non défini";
-                            } else {
-                                echo date("d/m/Y", strtotime($compte["Date_de_naissance"]));
-                            }
+                            <span class="info"><?php
+                                if (isset($compte)) {
+                                    if ($compte["Date_de_naissance"] == null) {
+                                        echo "Non défini";
+                                    } else {
+                                        echo date("d/m/Y", strtotime($compte["Date_de_naissance"]));
+                                    }
+                                }
                             ?></span>
                         </div>
                         <!-- Bouton modifier -->
@@ -272,7 +278,7 @@
                         <!-- Info -->
                         <div>
                             <span class="info_name">Genre :</span></br>
-                            <span class="info"><?php echo $compte["Genre"];?></span>
+                            <span class="info"><?php if (isset($compte)) { echo $compte["Genre"]; }?></span>
                         </div>
                         <!-- Bouton modifier -->
                             <button class="button_modifier" data-bs-toggle="modal" data-bs-target="#modifGenre">Modifier</button>
@@ -445,8 +451,10 @@
                             <select name="modifGenre" class="input_modif_text form-select">
                                 <option value="">Sélectionner un genre</option>
                                 <?php
-                                    while ($genre = $genres->fetch()) {
-                                        echo "<option value=\"".$genre["ID_Gen"]."\">".$genre["Nom"]."</option>";
+                                    if (isset($genres)) {
+                                        while ($genre = $genres->fetch()) {
+                                            echo "<option value=\"".$genre["ID_Gen"]."\">".$genre["Nom"]."</option>";
+                                        }
                                     }
                                 ?>
                                 <option value="Aucun">Aucun</option>

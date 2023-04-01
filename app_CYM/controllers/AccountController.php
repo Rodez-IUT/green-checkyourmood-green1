@@ -2,6 +2,7 @@
 
 namespace controllers;
 
+use PDO;
 use PDOException;
 use services\AccountService;
 use services\GenderService;
@@ -25,7 +26,7 @@ class AccountController {
      * @param $pdo instance de PDO afin de rechercher dans la base de données 
      * @return View la vue en charge du compte et des informations du compte
      */
-    public function index($pdo) {
+    public function index(PDO $pdo): View {
         //récupere l'id
         session_start();
         if (isset($_SESSION["idCompte"])) {
@@ -48,7 +49,7 @@ class AccountController {
      * @param $pdo instance de PDO afin de rechercher dans la base de données 
      * @return View la vue de l'accueil après avoir supprimer le compte
      */
-    public function deleteAccountById($pdo) {
+    public function deleteAccountById(PDO $pdo): View {
         //récupere l'id
         session_start();
         if (isset($_SESSION["idCompte"])) {
@@ -70,7 +71,7 @@ class AccountController {
      * @param $pdo instance de PDO afin de rechercher dans la base de données 
      * @return View la vue en charge du compte et des informations du compte
      */
-    public function updateLastNameById($pdo) {
+    public function updateLastNameById(PDO $pdo): View {
         //récupere l'id
         session_start();
         if (isset($_SESSION["idCompte"])) {
@@ -99,7 +100,7 @@ class AccountController {
      * @param $pdo instance de PDO afin de rechercher dans la base de données 
      * @return View la vue en charge du compte et des informations du compte
      */
-    public function updateFirstNameById($pdo) {
+    public function updateFirstNameById(PDO $pdo): View {
         //récupere l'id
         session_start();
         if (isset($_SESSION["idCompte"])) {
@@ -128,7 +129,7 @@ class AccountController {
      * @param $pdo instance de PDO afin de rechercher dans la base de données 
      * @return View la vue en charge du compte et des informations du compte
      */
-    public function updateEmailById($pdo) {
+    public function updateEmailById(PDO $pdo): View {
         //récupere l'id
         session_start();
         if (isset($_SESSION["idCompte"])) {
@@ -157,7 +158,7 @@ class AccountController {
      * @param $pdo instance de PDO afin de rechercher dans la base de données 
      * @return View la vue en charge du compte et des informations du compte
      */
-    public function updateMDPById($pdo) {
+    public function updateMDPById(PDO $pdo): View {
         //récupere l'id
         session_start();
         if (isset($_SESSION["idCompte"])) {
@@ -192,7 +193,7 @@ class AccountController {
      * @param $pdo instance de PDO afin de rechercher dans la base de données 
      * @return View la vue en charge du compte et des informations du compte
      */
-    public function updateDateNaissanceById($pdo) {
+    public function updateDateNaissanceById(PDO $pdo): View {
         //récupere l'id
         session_start();
         if (isset($_SESSION["idCompte"])) {
@@ -216,7 +217,7 @@ class AccountController {
      * @param $pdo instance de PDO afin de rechercher dans la base de données 
      * @return View la vue en charge du compte et des informations du compte
      */
-    public function updateGenreById($pdo) {
+    public function updateGenreById(PDO $pdo): View {
         //récupere l'id
         session_start();
         if (isset($_SESSION["idCompte"])) {
@@ -245,7 +246,7 @@ class AccountController {
      * @param $data la données que l'on souhaite corriger
      * @return mixed la donnée que l'on a conrigé
      */
-    public static function correction($data) {
+    public static function correction($data): mixed {
         //supprime les caractères invisibles en début et fin de chaine
         $data = trim($data);
         // supprime les antislashs de la chaine
@@ -259,7 +260,7 @@ class AccountController {
      * @param $data donnée que l'on souhaite vérifier
      * @return bool true si $data ok false sinon
      */
-    public static function verification($data) {
+    public static function verification($data): bool {
         $verif = $data != null && $data != "";
         return $verif;
     }
@@ -269,7 +270,7 @@ class AccountController {
      * @param $donnes donnée que l'on souhaite comparé
      * @return bool true si $data = $donnes, false sinon
      */
-    public static function equal($data, $donnes) {
+    public static function equal($data, $donnes): bool {
         $verif = $data == $donnes;
         return $verif;
     }
@@ -278,7 +279,7 @@ class AccountController {
      * @param $pdo instance de PDO afin de rechercher dans la base de données 
      * @return View la page d'accueil en fonction des circonstances
      */
-    public function createAccount($pdo) {
+    public function createAccount(PDO $pdo): View {
         $nom = htmlspecialchars(HttpHelper::getParam('nom'));
         $prenom = htmlspecialchars(HttpHelper::getParam('prenom'));
         $email = htmlspecialchars(HttpHelper::getParam('mail'));

@@ -1,13 +1,14 @@
 <?php
     namespace controllers;
 
+    use PDO;
     use services\GenderService;
     use yasmf\View;
     
     class HomeController
     {
         //instance du service des genres
-        private $genderService;
+        private GenderService $genderService;
 
         /**
          * Créer et initialise un objet HomeController 
@@ -20,7 +21,7 @@
          * @param $pdo instance de PDO afin de rechercher dans la base de données 
          * @return View la vue de la page d'acceuil non authentifié
          */
-        public function index($pdo){
+        public function index(PDO $pdo): View{
             session_start();
             if (isset($_SESSION["idCompte"])) {
                 session_unset();
@@ -33,10 +34,9 @@
         }
 
         /**
-         * @param $pdo instance de PDO afin de rechercher dans la base de données 
          * @return View la vue de la page d'acceuil authentifié
          */
-        public function homeForAccount() {
+        public function homeForAccount(): View {
             session_start();
             if (!isset($_SESSION["idCompte"])) {
                 $view = new View("/views/homeview");

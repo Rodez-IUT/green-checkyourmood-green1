@@ -2,6 +2,7 @@
 
 namespace controllers;
 
+use PDO;
 use PDOException;
 use services\MoodsService;
 use yasmf\View;
@@ -24,7 +25,7 @@ class MoodsController {
      * @param $view vue ou l'on souhaite set les variables pemettant de définir les périodes
      * @param $idCompte id du compte dont on souhaite les données
      */
-    private function setDiagramData($pdo, $view, $idCompte) {
+    private function setDiagramData(PDO $pdo, View $view, $idCompte): void {
         $select = HttpHelper::getParam("form-search");
         $select = $select == null ? "today" : htmlspecialchars($select); 
         $daySelect = $select == "today";
@@ -47,7 +48,7 @@ class MoodsController {
      * @param $view vue ou l'on souhaite set les variables pemettant de faire le calendrier
      * @param $idCompte id du compte dont on souhaite les données
      */
-    private function setCalenderData($pdo, $view, $idCompte) {
+    private function setCalenderData(PDO $pdo, View $view, $idCompte): void{
         $month = HttpHelper::getParam("dateSelect");
         $month = $month == null ? date("Y-m") : htmlspecialchars($month);
         $curdate = strtotime($month);
@@ -67,7 +68,7 @@ class MoodsController {
      * @param $pdo instance de PDO afin de rechercher dans la base de données 
      * @return View la vue en charge des humeurs
      */
-    public function index($pdo) {
+    public function index(PDO $pdo): View {
         session_start();
         if (isset($_SESSION["idCompte"])) {
             $idCompte = $_SESSION["idCompte"];
@@ -90,7 +91,7 @@ class MoodsController {
      * @param $pdo instance de PDO afin de rechercher dans la base de données 
      * @return View la vue en charge des humeurs
      */
-    public function addMood($pdo) {
+    public function addMood(PDO $pdo): View {
         session_start();
         if (isset($_SESSION["idCompte"])) {
             $idCompte = $_SESSION["idCompte"];
@@ -116,7 +117,7 @@ class MoodsController {
      * @param $pdo instance de PDO afin de rechercher dans la base de données 
      * @return View la vue en charge des humeurs
      */
-    public function editMood($pdo) {
+    public function editMood(PDO $pdo): View {
         $idHisto = HttpHelper::getParam("idHisto");
         $idHum = HttpHelper::getParam("humeurModif");
         $dateHum = htmlspecialchars(HttpHelper::getParam("dateHum"));
@@ -144,7 +145,7 @@ class MoodsController {
      * @param $pdo instance de PDO afin de rechercher dans la base de données 
      * @return View la vue en charge des humeurs
      */
-    public function deleteMood($pdo) {
+    public function deleteMood(PDO $pdo): View {
         $idHisto = HttpHelper::getParam("idHisto");
         $page = HttpHelper::getParam("page");
         try {
@@ -169,7 +170,7 @@ class MoodsController {
      * @param $pdo instance de PDO afin de rechercher dans la base de données 
      * @return View la vue en charge de la liste des humeurs
      */
-    public function moodsList($pdo) {
+    public function moodsList(PDO $pdo): View {
         session_start();
         if (isset($_SESSION["idCompte"])) {
             $idCompte = $_SESSION["idCompte"];
