@@ -6,3 +6,4 @@ php ./app_CYM/lib/vendor/bin/phpunit
 
 lancer les test avec coverage
 php -d xdebug.mode=coverage ./app_CYM/lib/vendor/bin/phpunit  --coverage-html='reports/coverage'
+
