@@ -36,7 +36,7 @@ function verifConnexion($email, $mdp){
         $mdp = md5($mdp);
         $stmt->execute(['email' => $email, 'mdp' => $mdp]);
         $nb = $stmt->rowCount();
-        $resultat = $stmt->fetchAll();
+        $resultat = $stmt->fetch();
 
         if($nb == 1){
             sendJSON($resultat, 200);
