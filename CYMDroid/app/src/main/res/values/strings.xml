@@ -15,7 +15,7 @@
 
     <string name="bouton_connexion">Se connecter</string>
 
-    <string name="visualisation_humeur">Visualisater les humeurs</string>
+    <string name="visualisation_humeur">Visualisaser les humeurs</string>
     <string name="ajouter_humeur">Ajouter une humeur</string>
 
     <string name="label_humeur">Humeur :</string>
@@ -24,6 +24,6 @@
     <string name="label_info_helper">Vous pouvez saisir des informations complémentaires ici</string>
     <string name="label_annuler">Annuler</string>
     <string name="label_valider">Valider</string>
-    <string name="date_helper">25/12/2022</string>
+    <string name="date_helper">2022-02-15</string>
     <string name="heure_helper">12:25</string>
 </resources>

@@ -25,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
@@ -74,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
             String motDePasseTxt = URLEncoder.encode(motDePasse.getText().toString(), "UTF-8");
             // Les informations renseignés par l'utilisateur sont insésrés dans l'URL de login
             String url = String.format(URL_LOGIN, adresseElectroniqueTxt, motDePasseTxt);
-            Toast.makeText(this, url, Toast.LENGTH_LONG).show();
             /*
              * On crée une requête GET, paramètrée par l'url préparée ci-dessus,
              * Le résultat de cette requête sera un objet Json
@@ -88,7 +88,10 @@ public class MainActivity extends AppCompatActivity {
                             // la zone de résultat est renseignée après extraction des
                             // types de clients
                             // Changement de page -> Direction sur la page de visualisation des humeurs
-                            pageVisualisationHumeurs();
+                            try {
+                                pageVisualisationHumeurs(reponse.getString("APIKEY"));
+                            } catch (JSONException e) {
+                            }
                         }
                     },
                     // écouteur du retour de la requête si aucun résultat n'est renvoyé
@@ -110,17 +113,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void afficherToast(String erreur) {
-        Toast.makeText(this, erreur, Toast.LENGTH_LONG).show();
+    public void afficherToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
-    public void pageVisualisationHumeurs() {
+    public void pageVisualisationHumeurs(String APIKey) {
         Intent switchActivityIntent = new Intent(this, OngletActivity.class);
+        switchActivityIntent.putExtra("APIKEY", APIKey);
         startActivity(switchActivityIntent);
     }
 
-    public void connecter(View view) {
-        Intent switchActivityIntent = new Intent(this, OngletActivity.class);
-        startActivity(switchActivityIntent);
-    }
 }

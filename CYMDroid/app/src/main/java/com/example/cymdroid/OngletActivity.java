@@ -3,6 +3,7 @@ package com.example.cymdroid;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -12,25 +13,38 @@ import androidx.viewpager2.widget.ViewPager2;
 
 public class OngletActivity extends AppCompatActivity {
 
+    public String APIKey;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
         getSupportActionBar().hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         setContentView(R.layout.activity_onglet);
+
+        /* Récupère APIKey */
+        APIKey = getIntent().getStringExtra("APIKEY");
+
         /*
          * on récupère un accès sur le ViewPager défini dans la vue
          * ainsi que sur le TabLayout qui gèrera les onglets
          */
         ViewPager2 gestionnairePagination = findViewById(R.id.activity_main_viewpager);
+
+        /* Given API KEY aux fragments */
+        Bundle args = new Bundle();
+        args.putString("APIKEY", APIKey);
+
         TabLayout gestionnaireOnglet = findViewById(R.id.tab_layout);
         /*
          * on associe au ViewPager un adaptateur (c'est lui qui organise le défilement
          * entre les fragments à afficher)
          */
         gestionnairePagination.setAdapter(new AdaptateurPage(this)) ;
+
         /*
          * On regroupe dans un tableau les intitulés des boutons d'onglet
          */
@@ -52,6 +66,10 @@ public class OngletActivity extends AppCompatActivity {
                     }
                 }).attach();
 
+    }
+
+    public String getAPIKey() {
+        return APIKey;
     }
 }
 
