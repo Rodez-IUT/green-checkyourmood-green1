@@ -27,6 +27,10 @@ class AccountController {
      * @return View la vue en charge du compte et des informations du compte
      */
     public function index(PDO $pdo): View {
+
+        // Déclaration (pour phpstan)
+        $idCompte = 0;
+
         //récupere l'id
         session_start();
         if (isset($_SESSION["idCompte"])) {
@@ -50,6 +54,10 @@ class AccountController {
      * @return View la vue de l'accueil après avoir supprimé le compte
      */
     public function deleteAccountById(PDO $pdo): View {
+
+        // Déclaration (pour phpstan)
+        $idCompte = 0;
+
         //récupere l'id
         session_start();
         if (isset($_SESSION["idCompte"])) {
@@ -72,6 +80,10 @@ class AccountController {
      * @return View la vue en charge du compte et des informations du compte
      */
     public function updateLastNameById(PDO $pdo): View {
+
+        // Déclaration (pour phpstan)
+        $idCompte = 0;
+
         //récupere l'id
         session_start();
         if (isset($_SESSION["idCompte"])) {
@@ -102,6 +114,10 @@ class AccountController {
      * @return View la vue en charge du compte et des informations du compte
      */
     public function updateFirstNameById(PDO $pdo): View {
+
+        // Déclaration (pour phpstan)
+        $idCompte = 0;
+
         //récupere l'id
         session_start();
         if (isset($_SESSION["idCompte"])) {
@@ -134,6 +150,10 @@ class AccountController {
      * @return View la vue en charge du compte et des informations du compte
      */
     public function updateEmailById(PDO $pdo): View {
+
+        // Déclaration (pour phpstan)
+        $idCompte = 0;
+
         //récupere l'id
         session_start();
         if (isset($_SESSION["idCompte"])) {
@@ -166,6 +186,10 @@ class AccountController {
      * @return View la vue en charge du compte et des informations du compte
      */
     public function updateMDPById(PDO $pdo): View {
+
+        // Déclaration (pour phpstan)
+        $idCompte = 0;
+
         //récupere l'id
         session_start();
         if (isset($_SESSION["idCompte"])) {
@@ -211,6 +235,10 @@ class AccountController {
      * @return View la vue en charge du compte et des informations du compte
      */
     public function updateDateNaissanceById(PDO $pdo): View {
+
+        // Déclaration (pour phpstan)
+        $idCompte = 0;
+
         //récupere l'id
         session_start();
         if (isset($_SESSION["idCompte"])) {
@@ -238,6 +266,10 @@ class AccountController {
      * @return View la vue en charge du compte et des informations du compte
      */
     public function updateGenreById(PDO $pdo): View {
+
+        // Déclaration (pour phpstan)
+        $idCompte = 0;
+
         //récupere l'id
         session_start();
         if (isset($_SESSION["idCompte"])) {
@@ -284,16 +316,7 @@ class AccountController {
      * @return bool true si $data ok false sinon
      */
     public static function verification(?string $data): bool {
-        return $data != null && $data != "";
-    }
-
-    /**
-     * @param $data donnée que l'on souhaite comparer
-     * @param $donnes donnée que l'on souhaite comparer
-     * @return bool true si $data = $donnes, false sinon
-     */
-    public static function equal($data, $donnes): bool {
-        return $data == $donnes;
+        return $data != null;
     }
 
     /**
@@ -326,7 +349,7 @@ class AccountController {
             $datenais = null;
         }
 
-        if ($MDP != $MDPC || strlen($MDP) < 8) {
+        if ($MDP != $MDPC || ($MDP != null && strlen($MDP) < 8)) {
             $MDP = null;
         } 
         session_start();

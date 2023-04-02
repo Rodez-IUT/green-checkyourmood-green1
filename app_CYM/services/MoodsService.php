@@ -11,9 +11,9 @@ class MoodsService {
 
     /**
      * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
-     * @return array $humeurs toutes les humeurs enregistrées dans la base de données
+     * @return array<int, mixed> $humeurs toutes les humeurs enregistrées dans la base de données
      */
-    public function getAllMoods(PDO $pdo): array {
+    public function getAllMoods(PDO $pdo) : array {
         $sql = "SELECT ID_Hum, Libelle, Emoji FROM humeur";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
@@ -147,7 +147,7 @@ class MoodsService {
      * @param PDO $pdo instance de PDO afin de rechercher dans la base de données
      * @param int $idCompte id du compte dont l'on recherche les données
      * @param string $period periode ou l'on cherche les humeurs
-     * @return array tableau des humeurs et tableau de leur occurence
+     * @return array<int, mixed> tableau des humeurs et tableau de leur occurence
      */
     public function getDiagramData(PDO $pdo, int $idCompte, string $period): array {
         $stmt = $pdo->query("SELECT ID_Hum, Libelle FROM humeur");
@@ -172,21 +172,24 @@ class MoodsService {
         }
         $tabHum = [];
         $tabNb = [];
-        while ($row = $stmt->fetch()) {
-            $search = $pdo->prepare("SELECT COUNT(*) AS nb FROM historique 
+
+        if ($stmt != false) {
+            while ($row = $stmt->fetch()) {
+                $search = $pdo->prepare("SELECT COUNT(*) AS nb FROM historique 
                                      WHERE Code_hum = :idHum AND Code_Compte = :idCompte
                                      AND Date_Hum BETWEEN :date AND :now");
-            $search->execute([
-                "idHum" => $row["ID_Hum"],
-                "idCompte" => $idCompte,
-                "date" => $date,
-                "now" => $now
-            ]);
-            $result = $search->fetch();
-            if ($result["nb"] != 0 ) {
-                $tabHum[] = $row["Libelle"];
-                $tabNb[$row["ID_Hum"]] = $result["nb"];
-            }            
+                $search->execute([
+                    "idHum" => $row["ID_Hum"],
+                    "idCompte" => $idCompte,
+                    "date" => $date,
+                    "now" => $now
+                ]);
+                $result = $search->fetch();
+                if ($result["nb"] != 0) {
+                    $tabHum[] = $row["Libelle"];
+                    $tabNb[$row["ID_Hum"]] = $result["nb"];
+                }
+            }
         }
         return [$tabHum, $tabNb];
     }
@@ -196,7 +199,7 @@ class MoodsService {
      * @param int $idCompte id du compte dont l'on recherche les données
      * @param string $month le mois ou l'on recherche les humeurs
      * @param int $number le nombre de jour dans le mois
-     * @return array de l'humeur la plus présente pour chaque jour
+     * @return array<int, mixed> de l'humeur la plus présente pour chaque jour
      */
     public function getCalenderData(PDO $pdo, int $idCompte, string $month, int $number): array {
         $emojiJour = [];

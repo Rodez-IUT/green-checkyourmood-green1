@@ -154,7 +154,7 @@ class AccountService {
     public function accountInsertion(PDO $pdo, ?string $nom, ?string $prenom, ?string $mail, ?string $MDP, ?string $datenais, ?string $genre): void {
         $sql = "INSERT INTO compte (Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES (:leNom, :lePrenom, :laDateDeNaissance, :leGenre, :leMDP, :leMail)";
         $stmt = $pdo->prepare($sql);
-        $MDP = md5($MDP);
+        $MDP = md5($MDP ?: "");
         $stmt->bindParam("leNom", $nom);
         $stmt->bindParam("lePrenom", $prenom);
         $stmt->bindParam("laDateDeNaissance", $datenais);
@@ -176,7 +176,7 @@ class AccountService {
     public function accountInsertionGenre(PDO $pdo, ?string $nom, ?string $prenom, ?string $mail, ?string $MDP, ?string $datenais): void{
         $sql = "INSERT INTO compte (Nom, Prenom, Date_de_naissance, Mot_de_passe, Email) VALUES (:leNom, :lePrenom, :laDateDeNaissance, :leMDP, :leMail)";
         $stmt = $pdo->prepare($sql);
-        $MDP = md5($MDP);
+        $MDP = md5($MDP ?: "");
         $stmt->bindParam("leNom", $nom);
         $stmt->bindParam("lePrenom", $prenom);
         $stmt->bindParam("laDateDeNaissance", $datenais);
@@ -205,7 +205,7 @@ class AccountService {
      * @return bool true si le mot de passe correspond, false sinon
      */
     public function verifMdp(PDO $pdo, int $idCompte, ?string $mdp): bool {
-        $mdp = md5($mdp);
+        $mdp = md5($mdp ?: "");
         $stmt = $pdo->prepare("SELECT * FROM compte WHERE Mot_de_passe = :mdp AND ID_Compte = :idCompte");
         $stmt->execute(["mdp" => $mdp,
                         "idCompte" => $idCompte]);
