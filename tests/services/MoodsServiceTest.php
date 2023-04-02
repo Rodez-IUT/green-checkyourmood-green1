@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Services\MoodsService;
 use yasmf\DataSource;
 

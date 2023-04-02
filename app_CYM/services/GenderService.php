@@ -17,16 +17,4 @@ class GenderService {
         $stmt->execute();
         return $stmt;
     }
-
-    //instance static de ce service
-    private static GenderService $defaultGenderService;
-    /**
-     * @return mixed instance static de ce service 
-     */
-    public static function getDefaultGenderService() {
-        if (GenderService::$defaultGenderService == null) {
-            GenderService::$defaultGenderService = new GenderService();
-        }
-        return GenderService::$defaultGenderService;
-    }
 }

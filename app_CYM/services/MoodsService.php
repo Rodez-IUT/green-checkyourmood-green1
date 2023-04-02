@@ -235,16 +235,4 @@ class MoodsService {
         }
         return $emojiJour;
     }
-
-    //instance static de ce service
-    private static MoodsService $defaultMoodsService;
-    /**
-     * @return MoodsService instance static de ce service
-     */
-    public static function getDefaultMoodsService() {
-        if (MoodsService::$defaultMoodsService == null) {
-            MoodsService::$defaultMoodsService = new MoodsService();
-        }
-        return MoodsService::$defaultMoodsService;
-    }
 }
