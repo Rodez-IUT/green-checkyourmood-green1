@@ -4,13 +4,13 @@ INSERT INTO genre (Nom) VALUES ("Femme");
 INSERT INTO genre (Nom) VALUES ("Non binaire");
 INSERT INTO genre (Nom) VALUES ("Autres");
 
-INSERT INTO compte (Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("Soulier", "Enzo", "2003-06-12", 1, md5("soulier123"), "enzo.soulier@iut-rodez.fr"); 
-INSERT INTO compte (Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("Mars", "Jeanne", "1990-02-05", 2, md5("aurevoir000"), "marsjeanne@gmail.com");
-INSERT INTO compte (Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("Durand", "William", "2020-01-07", null, md5("xxxgamerxxx"), "gamer.william@orange.fr");
-INSERT INTO compte (Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("Dutronc", "Gertrude", null, 2, md5("deuxiemeguerre"), "gertrudelabest@gmail.com");
-INSERT INTO compte (Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("Michel", "Mathis", "2007-06-05", 4, md5("boom123"), "m.michel@gmail.com");
-INSERT INTO compte (Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("Depardieu", "Gérard", "1985-10-10", 1, md5("alcool"), "vinagricole@orange.fr");
-INSERT INTO compte (Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("Chaplin", "Charlie", "1966-04-30", 2, md5("mimedepuis1900"), "mimevie@laposte.net");
+INSERT INTO compte (APIKEY, Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("RVGB3748939473","Soulier", "Enzo", "2003-06-12", 1, md5("soulier123"), "enzo.soulier@iut-rodez.fr");
+INSERT INTO compte (APIKEY, Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("RVGB9273684739","Mars", "Jeanne", "1990-02-05", 2, md5("aurevoir000"), "marsjeanne@gmail.com");
+INSERT INTO compte (APIKEY, Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("RVGB2873940038","Durand", "William", "2020-01-07", null, md5("xxxgamerxxx"), "gamer.william@orange.fr");
+INSERT INTO compte (APIKEY, Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("RVGB0932864839","Dutronc", "Gertrude", null, 2, md5("deuxiemeguerre"), "gertrudelabest@gmail.com");
+INSERT INTO compte (APIKEY, Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("RVGB9837249902","Michel", "Mathis", "2007-06-05", 4, md5("boom123"), "m.michel@gmail.com");
+INSERT INTO compte (APIKEY, Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("RVGB9048763489","Depardieu", "Gérard", "1985-10-10", 1, md5("alcool"), "vinagricole@orange.fr");
+INSERT INTO compte (APIKEY, Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES ("RVGB4783409093","Chaplin", "Charlie", "1966-04-30", 2, md5("mimedepuis1900"), "mimevie@laposte.net");
 
 INSERT INTO humeur (Libelle, Emoji) VALUES ("Admiration", "🤓");
 INSERT INTO humeur (Libelle, Emoji) VALUES ("Adoration", "😃");
