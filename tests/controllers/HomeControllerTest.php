@@ -6,7 +6,6 @@ use PDO;
 use PDOStatement;
 use PHPUnit\Framework\TestCase;
 use services\GenderService;
-use function Sodium\add;
 
 class HomeControllerTest extends TestCase {
 

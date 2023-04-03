@@ -2,6 +2,7 @@ parameters:
 	level: max
 	paths:
 		- app_CYM
+		- API_REST
 	excludePaths:
 	    - app_CYM/bootstrap
 	    - app_CYM/lib
