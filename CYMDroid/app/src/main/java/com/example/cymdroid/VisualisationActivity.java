@@ -135,7 +135,7 @@ public class VisualisationActivity extends Fragment implements AdapterView.OnIte
                         // la zone de résultat est renseignée après extraction des
                         // types de clients
                         // Affiche des humeurs dans la liste
-
+                        humeurs.clear();
                         for (int noHumeur = 0 ; noHumeur < reponse.length() ; noHumeur++) {
                             try {
                                 humeurs.add(noHumeur, new ItemHumeur(reponse.getJSONObject(noHumeur).getString("Emoji"),
@@ -146,6 +146,9 @@ public class VisualisationActivity extends Fragment implements AdapterView.OnIte
                             } catch (JSONException e) {
                             }
                         }
+
+                        item.notifyDataSetChanged();
+                        liste.requestLayout();
                     }
                 },
                 // écouteur du retour de la requête si aucun résultat n'est renvoyé
@@ -166,8 +169,5 @@ public class VisualisationActivity extends Fragment implements AdapterView.OnIte
 
         // la requête est placée dans la file d'attente des requêtes
         fileRequete.add(requeteVolley);
-
-        item.notifyDataSetChanged();
-        afficherToast("refresh");
     }
 }

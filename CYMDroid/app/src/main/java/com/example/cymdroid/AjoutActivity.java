@@ -141,7 +141,6 @@ public class AjoutActivity extends Fragment implements View.OnClickListener {
                 if (parent.getItemAtPosition(position).equals("Choose Football players from lis")){
                 } else {
                     String item = parent.getItemAtPosition(position).toString();
-                    Toast.makeText(parent.getContext(),"Selected: " +item, Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -223,7 +222,7 @@ public class AjoutActivity extends Fragment implements View.OnClickListener {
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError erreur) {
-                                    afficherToast(erreur.getMessage() + " => " + erreur.getCause());
+                                    afficherToast("Connexion impossible");
                                 }
                             }) {
                         public Map<String, String> getHeaders() throws AuthFailureError {
