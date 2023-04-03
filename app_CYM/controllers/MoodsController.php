@@ -25,7 +25,7 @@ class MoodsController {
      * @param $view vue ou l'on souhaite set les variables pemettant de définir les périodes
      * @param $idCompte id du compte dont on souhaite les données
      */
-    private function setDiagramData(PDO $pdo, View $view, $idCompte): void {
+    private function setDiagramData(PDO $pdo, View $view, int $idCompte): void {
         $select = HttpHelper::getParam("form-search");
         $select = $select == null ? "today" : htmlspecialchars($select); 
         $daySelect = $select == "today";
@@ -48,12 +48,12 @@ class MoodsController {
      * @param $view vue ou l'on souhaite set les variables pemettant de faire le calendrier
      * @param $idCompte id du compte dont on souhaite les données
      */
-    private function setCalenderData(PDO $pdo, View $view, $idCompte): void{
+    private function setCalenderData(PDO $pdo, View $view, int $idCompte): void{
         $month = HttpHelper::getParam("dateSelect");
         $month = $month == null ? date("Y-m") : htmlspecialchars($month);
-        $curdate = strtotime($month);
-        $moisCourant = idate("m", $curdate);
-        $anneeCourant = idate("Y", $curdate);
+        $curdate = strtotime($month) ?: 1;
+        $moisCourant = idate("m", $curdate) ?: 1;
+        $anneeCourant = idate("Y", $curdate) ?: 1;
         $curdate = $moisCourant >=10 ? $anneeCourant."-".$moisCourant : $anneeCourant."-0".$moisCourant;
         $number = cal_days_in_month(CAL_GREGORIAN, $moisCourant, $anneeCourant);
         $view->setVar("moisCourant", $moisCourant);
@@ -69,6 +69,10 @@ class MoodsController {
      * @return View la vue en charge des humeurs
      */
     public function index(PDO $pdo): View {
+
+        // Déclaration (pour phpstan)
+        $idCompte = 0;
+
         session_start();
         if (isset($_SESSION["idCompte"])) {
             $idCompte = $_SESSION["idCompte"];
@@ -92,6 +96,10 @@ class MoodsController {
      * @return View la vue en charge des humeurs
      */
     public function addMood(PDO $pdo): View {
+
+        // Déclaration (pour phpstan)
+        $idCompte = 0;
+
         session_start();
         if (isset($_SESSION["idCompte"])) {
             $idCompte = $_SESSION["idCompte"];
@@ -99,9 +107,9 @@ class MoodsController {
             header("Location: index.php");
         }
         session_write_close();
-        $idHum = HttpHelper::getParam("humeur");
-        $dateHum = htmlspecialchars(HttpHelper::getParam("dateHum"));
-        $info = htmlspecialchars(HttpHelper::getParam("info"));
+        $idHum = HttpHelper::getParam("humeur") ?: "";
+        $dateHum = htmlspecialchars(HttpHelper::getParam("dateHum") ?: "");
+        $info = htmlspecialchars(HttpHelper::getParam("info") ?: "");
         try {
             $this->moodsService->addMood($pdo, $idCompte, $idHum, $dateHum, $info);
             header("Location: index.php?controller=Moods");
@@ -118,10 +126,10 @@ class MoodsController {
      * @return View la vue en charge des humeurs
      */
     public function editMood(PDO $pdo): View {
-        $idHisto = HttpHelper::getParam("idHisto");
-        $idHum = HttpHelper::getParam("humeurModif");
-        $dateHum = htmlspecialchars(HttpHelper::getParam("dateHum"));
-        $info = htmlspecialchars(HttpHelper::getParam("info"));
+        $idHisto = HttpHelper::getParam("idHisto") ?: "";
+        $idHum = HttpHelper::getParam("humeurModif") ?: "";
+        $dateHum = htmlspecialchars(HttpHelper::getParam("dateHum") ?: "");
+        $info = htmlspecialchars(HttpHelper::getParam("info") ?: "");
         $page = HttpHelper::getParam("page");
         try {
             $this->moodsService->editMoodByIdHisto($pdo, $idHisto, $idHum, $dateHum, $info);
@@ -146,8 +154,8 @@ class MoodsController {
      * @return View la vue en charge des humeurs
      */
     public function deleteMood(PDO $pdo): View {
-        $idHisto = HttpHelper::getParam("idHisto");
-        $page = HttpHelper::getParam("page");
+        $idHisto = HttpHelper::getParam("idHisto") ?: "";
+        $page = HttpHelper::getParam("page") ?: "";
         try {
             $this->moodsService->deleteMoodByIdHisto($pdo, $idHisto);
             if ($page == null) {
@@ -171,6 +179,10 @@ class MoodsController {
      * @return View la vue en charge de la liste des humeurs
      */
     public function moodsList(PDO $pdo): View {
+
+        // Déclaration (pour phpstan)
+        $idCompte = 0;
+
         session_start();
         if (isset($_SESSION["idCompte"])) {
             $idCompte = $_SESSION["idCompte"];
@@ -188,7 +200,11 @@ class MoodsController {
         $stmt = $this->moodsService->getMoodsByIdCompteByPage($pdo, $idCompte, $page, $nbHumPage);
         $view->setVar("histoHum", $stmt);
         $nbHum = $this->moodsService->getNbHum($pdo, $idCompte);
-        $nbPage = $nbHum % $nbHumPage == 0 ? intdiv($nbHum, $nbHumPage) : intdiv($nbHum, $nbHumPage) + 1;
+        if (gettype($nbHum) == "integer" && gettype($nbHumPage)) {
+            $nbPage = $nbHum % $nbHumPage == 0 ? intdiv($nbHum, $nbHumPage) : intdiv($nbHum, $nbHumPage) + 1;
+        } else {
+            $nbPage = 1;
+        }
         $view->setVar("nbPage", $nbPage);
         return ($view);
     }
