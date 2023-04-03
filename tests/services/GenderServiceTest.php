@@ -29,20 +29,6 @@ class GenderServiceTest extends TestCase {
 
     }
 
- /*   public function testFindAllGenders()
-    {
-        $pdoTest = $this->getPDOTest();
-        $genderService = new GenderService();
-
-        $gendersExpected = $pdoTest->query("SELECT ID_Gen, Nom FROM genre");
-        $result = $genderService->findAllGenders($pdoTest);
-        $this->assertEquals($gendersExpected, $result);
-        while ($rowTest = $gendersExpected->fetch()) {
-            $row = $result->fetch();
-            $this->assertEquals($rowTest, $row);
-        }
-    }
- */
     public function testFindAllGenders()
     {
         // when on recupere toutes les humeurs
