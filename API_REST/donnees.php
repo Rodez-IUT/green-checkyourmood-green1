@@ -103,7 +103,6 @@
 	function ajoutHumeur($donneesJson) {
 		if(!empty($donneesJson['ID_HUMEUR'])
 			&& !empty($donneesJson['DATE_HUMEUR'])
-			&& !empty($donneesJson['INFO'])
 		  ){
 			  // Données remplies, on insère dans la table client
 			try {
