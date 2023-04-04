@@ -152,9 +152,11 @@ class AccountService {
      * @param ?string $genre l'id du genre que l'on souhaite insérer
      */
     public function accountInsertion(PDO $pdo, ?string $nom, ?string $prenom, ?string $mail, ?string $MDP, ?string $datenais, ?string $genre): void {
-        $sql = "INSERT INTO compte (Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES (:leNom, :lePrenom, :laDateDeNaissance, :leGenre, :leMDP, :leMail)";
+        $sql = "INSERT INTO compte (APIKEY, Nom, Prenom, Date_de_naissance, Code_Gen, Mot_de_passe, Email) VALUES (:APIKEY,:leNom, :lePrenom, :laDateDeNaissance, :leGenre, :leMDP, :leMail)";
         $stmt = $pdo->prepare($sql);
         $MDP = md5($MDP ?: "");
+        $apikey = $this->getAPIKEY();
+        $stmt->bindParam("APIKEY", $apikey);
         $stmt->bindParam("leNom", $nom);
         $stmt->bindParam("lePrenom", $prenom);
         $stmt->bindParam("laDateDeNaissance", $datenais);
@@ -174,15 +176,25 @@ class AccountService {
      * @param ?string $datenais la date de naissance du compte que l'on souhaite insérer
      */
     public function accountInsertionGenre(PDO $pdo, ?string $nom, ?string $prenom, ?string $mail, ?string $MDP, ?string $datenais): void{
-        $sql = "INSERT INTO compte (Nom, Prenom, Date_de_naissance, Mot_de_passe, Email) VALUES (:leNom, :lePrenom, :laDateDeNaissance, :leMDP, :leMail)";
+        $sql = "INSERT INTO compte (APIKEY, Nom, Prenom, Date_de_naissance, Mot_de_passe, Email) VALUES (:APIKEY, :leNom, :lePrenom, :laDateDeNaissance, :leMDP, :leMail)";
         $stmt = $pdo->prepare($sql);
         $MDP = md5($MDP ?: "");
+        $apikey = $this->getAPIKEY();
+        $stmt->bindParam("APIKEY", $apikey);
         $stmt->bindParam("leNom", $nom);
         $stmt->bindParam("lePrenom", $prenom);
         $stmt->bindParam("laDateDeNaissance", $datenais);
         $stmt->bindParam("leMDP", $MDP);
         $stmt->bindParam("leMail", $mail);
         $stmt->execute();
+    }
+
+    public function getAPIKEY(){
+        $apikey = "RVBA";
+        for($i = 0; $i < 10; $i++){
+            $apikey .= rand(0, 9);
+        }
+        return $apikey;
     }
 
     /**
@@ -208,7 +220,7 @@ class AccountService {
         $mdp = md5($mdp ?: "");
         $stmt = $pdo->prepare("SELECT * FROM compte WHERE Mot_de_passe = :mdp AND ID_Compte = :idCompte");
         $stmt->execute(["mdp" => $mdp,
-                        "idCompte" => $idCompte]);
+            "idCompte" => $idCompte]);
         return $stmt->rowCount() != 0;
     }
 
