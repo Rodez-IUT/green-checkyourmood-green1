@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Services\MoodsService;
+use services\MoodsService;
 use yasmf\DataSource;
 
 class MoodsServiceTest extends TestCase {
@@ -9,11 +9,11 @@ class MoodsServiceTest extends TestCase {
     private function getPDOTest() {
         try {
             $dataSource = new DataSource(
-                $host = 'localhost',
+                $host = '127.0.0.1',
                 $port = '3306', # to change with the port your mySql server listen to
                 $db = 'cym_test', # to change with your db name
-                $user = 'root', # to change with your db user name
-                $pass = 'Mn7kXWr4', # to change with your db password
+                $user = 'root', # to change with your db username
+                $pass = '', # to change with your db password
                 $charset = 'utf8mb4'
             ); 
             return $dataSource->getPDO();
@@ -361,8 +361,4 @@ class MoodsServiceTest extends TestCase {
         $pdoTest->rollBack();
     }
 
-    public function testGetDefaultMoodsService() {
-        $result = MoodsService::getDefaultMoodsService();
-        $this->assertInstanceOf(MoodsService::class, $result);
-    }
 }

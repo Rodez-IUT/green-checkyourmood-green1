@@ -1,19 +1,43 @@
 <?php
 
+
+namespace services;
+
+use PDO;
 use PHPUnit\Framework\TestCase;
-use Services\AccountService;
 use yasmf\DataSource;
 
 class AccountServiceTest extends TestCase {
 
+    private PDO $pdo;
+    private AccountService $accountService;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        // given un pdo pour les tests
+        $datasource = new DataSource(
+            $host = '127.0.0.1',
+            $port = 3306, # to change with the port your mySql server listen to
+            $db_name = 'cym_test', # to change with your db name
+            $user = 'root', # to change with your db username
+            $pass = '', # to change with your db password
+            $charset = 'utf8mb4'
+        );
+        $this->pdo = $datasource->getPdo();
+        // et un genderService
+        $this->accountService= new AccountService();
+
+    }
+
     private function getPDOTest() {
         try {
             $dataSource = new DataSource(
-                $host = 'localhost',
+                $host = '127.0.0.1',
                 $port = '3306', # to change with the port your mySql server listen to
                 $db = 'cym_test', # to change with your db name
                 $user = 'root', # to change with your db user name
-                $pass = 'Mn7kXWr4', # to change with your db password
+                $pass = '', # to change with your db password
                 $charset = 'utf8mb4'
             ); 
             return $dataSource->getPDO();

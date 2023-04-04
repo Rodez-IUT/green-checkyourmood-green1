@@ -212,15 +212,4 @@ class AccountService {
         return $stmt->rowCount() != 0;
     }
 
-    //instance static de ce service
-    private static AccountService $defaultAccountService;
-    /**
-     * @return AccountService instance static de ce service
-     */
-    public static function getDefaultAccountService(): AccountService {
-        if (AccountService::$defaultAccountService == null) {
-            AccountService::$defaultAccountService = new AccountService();
-        }
-        return AccountService::$defaultAccountService;
-    }
 }
