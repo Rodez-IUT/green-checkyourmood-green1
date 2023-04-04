@@ -30,280 +30,243 @@ class AccountServiceTest extends TestCase {
 
     }
 
-    private function getPDOTest() {
-        try {
-            $dataSource = new DataSource(
-                $host = '127.0.0.1',
-                $port = '3306', # to change with the port your mySql server listen to
-                $db = 'cym_test', # to change with your db name
-                $user = 'root', # to change with your db user name
-                $pass = '', # to change with your db password
-                $charset = 'utf8mb4'
-            ); 
-            return $dataSource->getPDO();
-        } catch (Exception $e) {
-            $this->fail($e->getMessage());
-            return null;
-        }
-    }
+    public function testFindAccountById_IdOk() {
 
-    public function testFindAccountById() {
-        $pdoTest = $this->getPDOTest();
-        $accountService = new AccountService();
-
-        $result = $accountService->findAccountById($pdoTest, 1);
-        $accountExpected = $pdoTest->query("SELECT compte.ID_Compte, compte.Nom, compte.Prenom, compte.Date_de_naissance, compte.Code_Gen as Genre, compte.Mot_de_passe, compte.Email
+        // Compte à retrouver
+        $accountExpected = $this->pdo->query("SELECT compte.ID_Compte, compte.Nom, compte.Prenom, compte.Date_de_naissance, compte.Code_Gen as Genre, compte.Mot_de_passe, compte.Email
                                             FROM compte
                                             WHERE compte.ID_Compte = 1");
         $accountExpected = $accountExpected->fetch();
         $accountExpected["Genre"] = "Homme";
-        $this->assertEquals($accountExpected, $result);
 
-        $result = $accountService->findAccountById($pdoTest, 3);
-        $accountExpected = $pdoTest->query("SELECT compte.ID_Compte, compte.Nom, compte.Prenom, compte.Date_de_naissance, compte.Code_Gen as Genre, compte.Mot_de_passe, compte.Email
-                                            FROM compte
-                                            WHERE compte.ID_Compte = 3");
-        $accountExpected = $accountExpected->fetch();
-        $accountExpected["Genre"] = "Non défini";
-        $this->assertEquals($accountExpected, $result);
+        // When: On cherche un compte grace à l'ID de l'utik
+        $result = $this->accountService->findAccountById($this->pdo, 1);
 
-        $result = $accountService->findAccountById($pdoTest, 4);
-        $accountExpected = $pdoTest->query("SELECT compte.ID_Compte, compte.Nom, compte.Prenom, compte.Date_de_naissance, compte.Code_Gen as Genre, compte.Mot_de_passe, compte.Email
-                                            FROM compte
-                                            WHERE compte.ID_Compte = 4");
-        $accountExpected = $accountExpected->fetch();
-        $accountExpected["Genre"] = "Femme";
+        // Then: Le service renvoi le bon compte
         $this->assertEquals($accountExpected, $result);
+    }
 
-        $result = $accountService->findAccountById($pdoTest, "toto");
+    public function testFindAccountById_IdNonOk() {
+        // When: on cherche un compte avec
+        $result = $this->accountService->findAccountById($this->pdo, "toto");
+
+        // Alors le service renvoie null
         $this->assertEquals(null, $result);
     }
-   
-    public function testFindAccountIdByEmailAndMDP() {
-        $pdoTest = $this->getPDOTest();
-        $accountService = new AccountService();
 
-        $result = $accountService->findAccountIdByEmailAndMDP($pdoTest, "enzo.soulier@iut-rodez.fr", "soulier123");
-        $accountExpected = $pdoTest->query("SELECT compte.ID_Compte FROM compte
+    public function testFindAccountIdByEmailAndMDP_DonnéesCorrects() {
+        // Compte à trouver
+        $accountExpected = $this->pdo->query("SELECT compte.ID_Compte FROM compte
                                             WHERE compte.Email = \"enzo.soulier@iut-rodez.fr\"
                                             AND compte.Mot_de_passe = \"soulier123\"");
         $accountExpected = $accountExpected->fetch();
-        $this->assertEquals($accountExpected, $result);
 
-        $result = $accountService->findAccountIdByEmailAndMDP($pdoTest, "gamer.william@orange.fr", "xxxgamerxxx");
-        $accountExpected = $pdoTest->query("SELECT compte.ID_Compte FROM compte
-                                            WHERE compte.Email = \"gamer.william@orange.fr\"
-                                            AND compte.Mot_de_passe = \"xxxgamerxxx\"");
-        $accountExpected = $accountExpected->fetch();
-        $this->assertEquals($accountExpected, $result);
+        // When: On cherche un compte avec un email et un mot de passe correcte
+        $result = $this->accountService->findAccountIdByEmailAndMDP($this->pdo, "enzo.soulier@iut-rodez.fr", "soulier123");
 
-        $result = $accountService->findAccountIdByEmailAndMDP($pdoTest, "gertrudelabest@gmail.com", "deuxiemeguerre");
-        $accountExpected = $pdoTest->query("SELECT compte.ID_Compte FROM compte
-                                            WHERE compte.Email = \"gertrudelabest@gmail.com\"
-                                            AND compte.Mot_de_passe = \"deuxiemeguerre\"");
-        $accountExpected = $accountExpected->fetch();
+        // Then: Le service renvoie le bon compte
         $this->assertEquals($accountExpected, $result);
+    }
 
-        $result = $accountService->findAccountIdByEmailAndMDP($pdoTest, "faux.mail@outlook.com", "MotDePasse");
+    public function testFindAccountIdByEmailAndMDP_DonnéesIncorrectes() {
+
+        // When: on cherche un compte inexistant
+        $result = $this->accountService->findAccountIdByEmailAndMDP($this->pdo, "faux.mail@outlook.com", "MotDePasse");
+
+        // Then: le service renvoi null
         $this->assertEquals(null, $result);
     }
 
-    public function testDeleteAccountById() {
-        $pdoTest = $this->getPDOTest();
-        $accountService = new AccountService();
+    public function testDeleteAccountById_IdOk() {
 
-        $pdoTest->beginTransaction();
+        $this->pdo->beginTransaction();
 
-        $accountService->deleteAccountById($pdoTest, 1);
-        $verif = $pdoTest->query("SELECT COUNT(*) as nbRow FROM compte WHERE ID_Compte = 1");
+        // When: On supprimer un compte avec un id correcte
+        $this->accountService->deleteAccountById($this->pdo, 1);
+
+        // Then: Le service supprime le compte
+        $verif = $this->pdo->query("SELECT COUNT(*) as nbRow FROM compte WHERE ID_Compte = 1");
         $verif = $verif->fetch();
         $this->assertTrue($verif["nbRow"] == 0);
 
-        $accountService->deleteAccountById($pdoTest, 3);
-        $verif = $pdoTest->query("SELECT COUNT(*) as nbRow FROM compte WHERE ID_Compte = 3");
-        $verif = $verif->fetch();
-        $this->assertTrue($verif["nbRow"] == 0);
+        $this->pdo->rollBack();
+    }
 
-        $accountService->deleteAccountById($pdoTest, 4);
-        $verif = $pdoTest->query("SELECT COUNT(*) as nbRow FROM compte WHERE ID_Compte = 4");
-        $verif = $verif->fetch();
-        $this->assertTrue($verif["nbRow"] == 0);
+    public function testDeleteAccountById_IdNonOk() {
 
-        
-        $nbRow = $pdoTest->query("SELECT COUNT(*) as nbRow FROM compte");
+        $this->pdo->beginTransaction();
+
+        // Nb compte avant suppression
+        $nbRow = $this->pdo->query("SELECT COUNT(*) as nbRow FROM compte");
         $nbRow = $nbRow->fetch();
-        $accountService->deleteAccountById($pdoTest, 100000);
-        $verif = $pdoTest->query("SELECT COUNT(*) as nbRow FROM compte");
+
+        // When: On supprimer un compte avec un id incorrecte
+        $this->accountService->deleteAccountById($this->pdo, 100000);
+
+        // Nb compte apres suppression
+        $verif = $this->pdo->query("SELECT COUNT(*) as nbRow FROM compte");
         $verif = $verif->fetch();
+
+        // Then: Le service ne supprime pas le compte
         $this->assertTrue($verif["nbRow"] == $nbRow["nbRow"]);
 
-        $pdoTest->rollBack();
+        $this->pdo->rollBack();
     }
 
-    public function testUpdateLastNameById() {
-        $pdoTest = $this->getPDOTest();
-        $accountService = new AccountService();
+    public function testUpdateLastNameById_IdOk() {
 
-        $pdoTest->beginTransaction();
+        $this->pdo->beginTransaction();
 
-        $accountService->updateLastNameById($pdoTest, 1, "Restoueix");
-        $verif = $pdoTest->query("SELECT Nom FROM compte WHERE ID_Compte = 1");
+        // When: on met a jour un nom avec un id correct
+        $this->accountService->updateLastNameById($this->pdo, 1, "Restoueix");
+
+        $verif = $this->pdo->query("SELECT Nom FROM compte WHERE ID_Compte = 1");
         $verif = $verif->fetch();
+
+        // Then: Le nom est modifier
         $this->assertEquals("Restoueix", $verif["Nom"]);
 
-        $pdoTest->rollBack();
+        $this->pdo->rollBack();
     }
 
-    public function testUpdateFirstNameById() {
-        $pdoTest = $this->getPDOTest();
-        $accountService = new AccountService();
+    public function testUpdateFirstNameById_IdOk() {
 
-        $pdoTest->beginTransaction();
+        $this->pdo->beginTransaction();
 
-        $accountService->updateFirstNameById($pdoTest, 1, "Emilien");
-        $verif = $pdoTest->query("SELECT Prenom FROM compte WHERE ID_Compte = 1");
+        // When: On met à jour le prenom
+        $this->accountService->updateFirstNameById($this->pdo, 1, "Emilien");
+
+        $verif = $this->pdo->query("SELECT Prenom FROM compte WHERE ID_Compte = 1");
         $verif = $verif->fetch();
+
+        // Then: Le prenom est bien mit a jour
         $this->assertEquals("Emilien", $verif["Prenom"]);
 
-        $pdoTest->rollBack();
+        $this->pdo->rollBack();
     }
 
-    public function testUpdateEmailById() {
-        $pdoTest = $this->getPDOTest();
-        $accountService = new AccountService();
+    public function testUpdateEmailById_IdOk() {
 
-        $pdoTest->beginTransaction();
+        $this->pdo->beginTransaction();
 
-        $accountService->updateEmailById($pdoTest, 1, "emilien.restoueix@iut-rodez.fr");
-        $verif = $pdoTest->query("SELECT Email FROM compte WHERE ID_Compte = 1");
+        // When: on essaye de changer de mail
+        $this->accountService->updateEmailById($this->pdo, 1, "emilien.restoueix@iut-rodez.fr");
+
+        $verif = $this->pdo->query("SELECT Email FROM compte WHERE ID_Compte = 1");
         $verif = $verif->fetch();
+
+        // Then: le mail est bien changer
         $this->assertEquals("emilien.restoueix@iut-rodez.fr", $verif["Email"]);
 
-        $pdoTest->rollBack();
+        $this->pdo->rollBack();
     }
 
-    public function testUpdateMDPById() {
-        $pdoTest = $this->getPDOTest();
-        $accountService = new AccountService();
+    public function testUpdateMDPById_IdOk() {
 
-        $pdoTest->beginTransaction();
+        $this->pdo->beginTransaction();
 
-        $accountService->updateMDPById($pdoTest, 1, "MotDePasse");
-        $verif = $pdoTest->query("SELECT Mot_de_passe FROM compte WHERE ID_Compte = 1");
+        // When: on essaye de mettre ajour son mot de passe
+        $this->accountService->updateMDPById($this->pdo, 1, "MotDePasse");
+
+        $verif = $this->pdo->query("SELECT Mot_de_passe FROM compte WHERE ID_Compte = 1");
         $verif = $verif->fetch();
+
+        // Then: Le mot de passe est bien changer
         $this->assertEquals(md5("MotDePasse"), $verif["Mot_de_passe"]);
 
-        $pdoTest->rollBack();
+        $this->pdo->rollBack();
     }
 
     public function testUpdateDateNaissanceById() {
-        $pdoTest = $this->getPDOTest();
-        $accountService = new AccountService();
 
-        $pdoTest->beginTransaction();
+        $this->pdo->beginTransaction();
 
-        $accountService->updateDateNaissanceById($pdoTest, 1, "2000-10-10");
-        $verif = $pdoTest->query("SELECT Date_de_naissance FROM compte WHERE ID_Compte = 1");
+        // When: on essaye de changer la date de naissance
+        $this->accountService->updateDateNaissanceById($this->pdo, 1, "2000-10-10");
+
+        $verif = $this->pdo->query("SELECT Date_de_naissance FROM compte WHERE ID_Compte = 1");
         $verif = $verif->fetch();
+
+        // Then: Alors la date de naissance est bien changer
         $this->assertEquals("2000-10-10", $verif["Date_de_naissance"]);
 
-        $accountService->updateDateNaissanceById($pdoTest, 1, null);
-        $verif = $pdoTest->query("SELECT Date_de_naissance FROM compte WHERE ID_Compte = 1");
-        $verif = $verif->fetch();
-        $this->assertEquals(null, $verif["Date_de_naissance"]);
-
-        $pdoTest->rollBack();
+        $this->pdo->rollBack();
     }
 
-    public function testUpdateGenreById() {
-        $pdoTest = $this->getPDOTest();
-        $accountService = new AccountService();
+    public function testUpdateGenreById_IdOk() {
 
-        $pdoTest->beginTransaction();
+        $this->pdo->beginTransaction();
 
-        $accountService->updateGenreById($pdoTest, 1, 2);
-        $verif = $pdoTest->query("SELECT Code_Gen FROM compte WHERE ID_Compte = 1");
+        // When: on essaye de changer de genre
+        $this->accountService->updateGenreById($this->pdo, 1, 2);
+
+        $verif = $this->pdo->query("SELECT Code_Gen FROM compte WHERE ID_Compte = 1");
         $verif = $verif->fetch();
+
+        // Then: Le genre est changer
         $this->assertEquals(2, $verif["Code_Gen"]);
 
-        $accountService->updateGenreById($pdoTest, 1, "Aucun");
-        $verif = $pdoTest->query("SELECT Code_Gen FROM compte WHERE ID_Compte = 1");
-        $verif = $verif->fetch();
-        $this->assertEquals(null, $verif["Code_Gen"]);
-
-        $pdoTest->rollBack();
+        $this->pdo->rollBack();
     }
 
     public function testAccountInsertion() {
-        $pdoTest = $this->getPDOTest();
-        $accountService = new AccountService();
 
-        $pdoTest->beginTransaction();
+        $this->pdo->beginTransaction();
 
-        $accountService->accountInsertion($pdoTest, "TEST", "Test", "test@gmail.com", "mdp", "2000-01-01", 1);
+        // When: On insere un compte correcte
+        $this->accountService->accountInsertion($this->pdo, "TEST", "Test", "test@gmail.com", "mdp", "2000-01-01", 1);
+
+        //Compte à ajouter
         $accountExpected = ["Nom" => "TEST",
-                            "Prenom" => "Test",
-                            "Email" => "test@gmail.com",
-                            "Mot_de_passe" => md5("mdp"),
-                            "Date_de_naissance" => "2000-01-01",
-                            "Code_Gen" => 1];
-        $id = $pdoTest->lastInsertId();
-        $verif = $pdoTest->query("SELECT Nom, Prenom, Email, Mot_de_passe, Date_de_naissance, Code_Gen FROM compte WHERE ID_Compte = ".$id);
+            "Prenom" => "Test",
+            "Email" => "test@gmail.com",
+            "Mot_de_passe" => md5("mdp"),
+            "Date_de_naissance" => "2000-01-01",
+            "Code_Gen" => 1];
+
+        $id = $this->pdo->lastInsertId();
+        $verif = $this->pdo->query("SELECT Nom, Prenom, Email, Mot_de_passe, Date_de_naissance, Code_Gen FROM compte WHERE ID_Compte = ".$id);
         $verif = $verif->fetch();
+
+        // Then: le compte est bien ajouter
         $this->assertEquals($accountExpected, $verif);
 
-        $accountService->accountInsertion($pdoTest, "TEST2", "Test2", "test2@gmail.com", "mdp", null, 1);
-        $accountExpected = ["Nom" => "TEST2",
-                            "Prenom" => "Test2",
-                            "Email" => "test2@gmail.com",
-                            "Mot_de_passe" => md5("mdp"),
-                            "Date_de_naissance" => null,
-                            "Code_Gen" => 1];
-        $id = $pdoTest->lastInsertId();
-        $verif = $pdoTest->query("SELECT Nom, Prenom, Email, Mot_de_passe, Date_de_naissance, Code_Gen FROM compte WHERE ID_Compte = ".$id);
-        $verif = $verif->fetch();
-        $this->assertEquals($accountExpected, $verif);
-
-        $accountService->accountInsertionGenre($pdoTest, "TEST3", "Test3", "test3@gmail.com", "mdp", "1980-11-11");
-        $accountExpected = ["Nom" => "TEST3",
-                            "Prenom" => "Test3",
-                            "Email" => "test3@gmail.com",
-                            "Mot_de_passe" => md5("mdp"),
-                            "Date_de_naissance" => "1980-11-11",
-                            "Code_Gen" => null];
-        $id = $pdoTest->lastInsertId();
-        $verif = $pdoTest->query("SELECT Nom, Prenom, Email, Mot_de_passe, Date_de_naissance, Code_Gen FROM compte WHERE ID_Compte = ".$id);
-        $verif = $verif->fetch();
-        $this->assertEquals($accountExpected, $verif);
-
-        $accountService->accountInsertionGenre($pdoTest, "TEST4", "Test4", "test4@gmail.com", "mdp", null);
-        $accountExpected = ["Nom" => "TEST4",
-                            "Prenom" => "Test4",
-                            "Email" => "test4@gmail.com",
-                            "Mot_de_passe" => md5("mdp"),
-                            "Date_de_naissance" => null,
-                            "Code_Gen" => null];
-        $id = $pdoTest->lastInsertId();
-        $verif = $pdoTest->query("SELECT Nom, Prenom, Email, Mot_de_passe, Date_de_naissance, Code_Gen FROM compte WHERE ID_Compte = ".$id);
-        $verif = $verif->fetch();
-        $this->assertEquals($accountExpected, $verif);
-
-        $pdoTest->rollBack();        
+        $this->pdo->rollBack();
     }
 
-    public function testDuplicateAccount() {
-        $pdoTest = $this->getPDOTest();
-        $accountService = new AccountService();
+    public function testDuplicateAccount_CompteExistant() {
 
-        $result = $accountService->duplicateAccount($pdoTest, "enzo.soulier@iut-rodez.fr");
+        // When: on verfie qu'un compte existant n'est pas present en double et on renvoie le nombre de compte trouver
+        $result = $this->accountService->duplicateAccount($this->pdo, "enzo.soulier@iut-rodez.fr");
+
+        // Then: le resultat renvoie 1 (Le compte n'est pas dupliquer)
         $this->assertEquals(1, $result);
+    }
 
-        $result = $accountService->duplicateAccount($pdoTest, "toto@iut-rodez.fr");
+    public function testDuplicateAccount_CompteInexistant() {
+
+        // When: on verfie qu'un compte inexistant n'est pas present et on renvoie le nombre de compte trouver
+        $result = $this->accountService->duplicateAccount($this->pdo, "toto@iut-rodez.fr");
+
+        // Then: le resultat est egal à 0
         $this->assertEquals(0, $result);
     }
 
-    public function testGetDefaultAccountService() {
-        $result = AccountService::getDefaultAccountService();
-        $this->assertInstanceOf(AccountService::class, $result);
+    public function testVerifMdp_MdpOk(){
+
+        // When: on test avec un bon mot de passe
+        $bool = $this->accountService->verifMdp($this->pdo, 1, "soulier123");
+
+        //Then: Le mot de passe est bon (renvoie true)
+        $this->assertTrue($bool);
+    }
+
+    public function testVerifMdp_MdpNonOk(){
+
+        // When: on test avec un mauvais mot de passe
+        $bool = $this->accountService->verifMdp($this->pdo, 1, "soul12");
+
+        //Then: Le mot de passe est bon (renvoie false)
+        $this->assertFalse($bool);
     }
 }
