@@ -15,7 +15,7 @@ La version 2 de l’application vise 2 objectifs :
 
 Scrum master : Vincent Faure
 
-Product owner : Benjamin Da Silva
+Product owner : Romain Courbaize
 
 Développeurs : Antoine Gouzy, Romain Courbaize, Benjamin Da Silva et Vincent Faure
 
