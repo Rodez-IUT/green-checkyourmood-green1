@@ -38,114 +38,66 @@ class AccountControllerTest extends TestCase
 
     public function testIndex_SansSession()
     {
-        try {
-            $this->pdo->beginTransaction();
-            // when on appel AccountController->index sans session
-            $view = $this->accountController->index($this->pdo);
-            // then la view est accountview
-            self::assertEquals("/views/accountview", $view->getRelativePath());
-            $this->pdo->rollBack();
-        } catch (Exception) {
-            $this->pdo->rollBack();
-        }
+        // when on appel AccountController->index sans session
+        $view = $this->accountController->index($this->pdo);
+        // then la view est accountview
+        self::assertEquals("/views/accountview", $view->getRelativePath());
     }
 
     public function testUpdateDateNaissanceById_SansSession()
     {
-        try {
-            $this->pdo->beginTransaction();
-            // when on appel AccountController->updateDateNaissanceById sans session
-            $view = $this->accountController->updateDateNaissanceById($this->pdo);
-            // then la view est accountview
-            self::assertEquals("/views/accountview", $view->getRelativePath());
-            $this->pdo->rollBack();
-        } catch (Exception) {
-            $this->pdo->rollBack();
-        }
+        // when on appel AccountController->updateDateNaissanceById sans session
+        $view = $this->accountController->updateDateNaissanceById($this->pdo);
+        // then la view est accountview
+        self::assertEquals("/views/accountview", $view->getRelativePath());
     }
 
     public function testDeleteAccountById_SansSession()
     {
-        try {
-            $this->pdo->beginTransaction();
-            // when on appel AccountController->deleteAccountById sans session
-            $view = $this->accountController->deleteAccountById($this->pdo);
-            // then la view est accountview
-            self::assertEquals("/views/homeview", $view->getRelativePath());
-            $this->pdo->rollBack();
-        } catch (Exception) {
-            $this->pdo->rollBack();
-        }
+        // when on appel AccountController->deleteAccountById sans session
+        $view = $this->accountController->deleteAccountById($this->pdo);
+        // then la view est accountview
+        self::assertEquals("/views/homeview", $view->getRelativePath());
     }
 
     public function testUpdateGenreById_SansSession()
     {
-        try {
-            $this->pdo->beginTransaction();
-            // when on appel AccountController->updateGenreById sans session
-            $view = $this->accountController->updateGenreById($this->pdo);
-            // then la view est accountview
-            self::assertEquals("/views/accountview", $view->getRelativePath());
-            $this->pdo->rollBack();
-        } catch (Exception) {
-            $this->pdo->rollBack();
-        }
+        // when on appel AccountController->updateGenreById sans session
+        $view = $this->accountController->updateGenreById($this->pdo);
+        // then la view est accountview
+        self::assertEquals("/views/accountview", $view->getRelativePath());
     }
 
     public function testUpdateLastNameById_SansSession()
     {
-        try {
-            $this->pdo->beginTransaction();
-            // when on appel AccountController->updateLastNameById sans session
-            $view = $this->accountController->updateLastNameById($this->pdo);
-            // then la view est accountview
-            self::assertEquals("/views/accountview", $view->getRelativePath());
-            $this->pdo->rollBack();
-        } catch (Exception) {
-            $this->pdo->rollBack();
-        }
+        // when on appel AccountController->updateLastNameById sans session
+        $view = $this->accountController->updateLastNameById($this->pdo);
+        // then la view est accountview
+        self::assertEquals("/views/accountview", $view->getRelativePath());
     }
 
     public function testUpdateFirstNameById_SansSession()
     {
-        try {
-            $this->pdo->beginTransaction();
-            // when on appel AccountController->updateFirstNameById sans session
-            $view = $this->accountController->updateFirstNameById($this->pdo);
-            // then la view est accountview
-            self::assertEquals("/views/accountview", $view->getRelativePath());
-            $this->pdo->rollBack();
-        } catch (Exception) {
-            $this->pdo->rollBack();
-        }
+        // when on appel AccountController->updateFirstNameById sans session
+        $view = $this->accountController->updateFirstNameById($this->pdo);
+        // then la view est accountview
+        self::assertEquals("/views/accountview", $view->getRelativePath());
     }
 
     public function testUpdateEmailById_SansSession()
     {
-        try {
-            $this->pdo->beginTransaction();
-            // when on appel AccountController->updateEmailById sans session
-            $view = $this->accountController->updateEmailById($this->pdo);
-            // then la view est accountview
-            self::assertEquals("/views/accountview", $view->getRelativePath());
-            $this->pdo->rollBack();
-        } catch (Exception) {
-            $this->pdo->rollBack();
-        }
+        // when on appel AccountController->updateEmailById sans session
+        $view = $this->accountController->updateEmailById($this->pdo);
+        // then la view est accountview
+        self::assertEquals("/views/accountview", $view->getRelativePath());
     }
 
     public function testUpdateMDPById_SansSession()
     {
-        try {
-            $this->pdo->beginTransaction();
-            // when on appel AccountController->updateEmailById sans session
-            $view = $this->accountController->updateMDPById($this->pdo);
-            // then la view est accountview
-            self::assertEquals("/views/accountview", $view->getRelativePath());
-            $this->pdo->rollBack();
-        } catch (Exception) {
-            $this->pdo->rollBack();
-        }
+        // when on appel AccountController->updateEmailById sans session
+        $view = $this->accountController->updateMDPById($this->pdo);
+        // then la view est accountview
+        self::assertEquals("/views/accountview", $view->getRelativePath());
     }
 
 
@@ -331,63 +283,43 @@ class AccountControllerTest extends TestCase
 
     public function testUpdateEmailById_Valide_AvecSession()
     {
-        try {
-            $this->pdo->beginTransaction();
-            // given une session avec un id correct et un mail défini en parametre correct
-            session_start();
-            $_SESSION["idCompte"] = 1;
-            $_GET['modifEmail'] = 'emailTest@mail.com';
-            // when on appel AccountController->updateEmailById
-            $view = $this->accountController->updateEmailById($this->pdo);
-            // then la view est accountview
-            self::assertEquals("/views/accountview", $view->getRelativePath());
-            session_destroy();
-            $this->pdo->rollBack();
-        } catch (Exception) {
-            $this->pdo->rollBack();
-        }
+        // given une session avec un id correct et un mail défini en parametre correct
+        session_start();
+        $_SESSION["idCompte"] = 1;
+        $_GET['modifEmail'] = 'emailTest@mail.com';
+        // when on appel AccountController->updateEmailById
+        $view = $this->accountController->updateEmailById($this->pdo);
+        // then la view est accountview
+        self::assertEquals("/views/accountview", $view->getRelativePath());
+        session_destroy();
     }
 
     public function testUpdateEmailById_Invalide_AvecSession()
     {
-        try {
-            $this->pdo->beginTransaction();
-            // given une session avec un id correct et un mail défini en parametre correct
-            session_start();
-            $_SESSION["idCompte"] = 1;
-            $_GET['modifEmail'] = 'emailTest';
-            // when on appel AccountController->updateEmailById
-            $view = $this->accountController->updateEmailById($this->pdo);
-            // then la view est accountview
-            self::assertEquals("/views/accountview", $view->getRelativePath());
-            self::assertNull($view->getVar("errModifPrenom"));
-            session_destroy();
-            $this->pdo->rollBack();
-        } catch (Exception) {
-            $this->pdo->rollBack();
-        }
+        // given une session avec un id correct et un mail défini en parametre correct
+        session_start();
+        $_SESSION["idCompte"] = 1;
+        $_GET['modifEmail'] = 'emailTest';
+        // when on appel AccountController->updateEmailById
+        $view = $this->accountController->updateEmailById($this->pdo);
+        // then la view est accountview
+        self::assertEquals("/views/accountview", $view->getRelativePath());
+        self::assertNull($view->getVar("errModifPrenom"));
+        session_destroy();
     }
 
     public function testUpdateMDPById_Valide_AvecSession()
     {
-        try {
-            $this->pdo->beginTransaction();
-            // given une session avec un id correct et un MDP défini en parametre correct
-            session_start();
-            $_SESSION["idCompte"] = 1;
-            $_GET['modifMdp'] = '123456789';
-            $_GET['confirmModifMdp'] = '123456789';
-            $_GET['oldMdp'] = 'soulier123';
-            // when on appel AccountController->updateMDPById
-            $view = $this->accountController->updateMDPById($this->pdo);
-            // then la view est accountview
-            self::assertEquals("/views/accountview", $view->getRelativePath());
-            session_destroy();
-            $this->pdo->rollBack();
-        } catch (Exception) {
-            $this->pdo->rollBack();
-        }
+        // given une session avec un id correct et un MDP défini en parametre correct
+        session_start();
+        $_SESSION["idCompte"] = 1;
+        $_GET['modifMdp'] = '123456789';
+        $_GET['confirmModifMdp'] = '123456789';
+        $_GET['oldMdp'] = 'soulier123';
+        // when on appel AccountController->updateMDPById
+        $view = $this->accountController->updateMDPById($this->pdo);
+        // then la view est accountview
+        self::assertEquals("/views/accountview", $view->getRelativePath());
+        session_destroy();
     }
-
-
 }
