@@ -39,7 +39,7 @@ public class VisualisationActivity extends Fragment implements AdapterView.OnIte
     ListView liste;
     List<ItemHumeur> humeurs;
 
-    private final String URL_HUMEURS = "http://10.0.2.2/API_REST/humeurs";
+    private final String URL_HUMEURS = "http://192.168.56.101/green-checkyourmood-green1/API_REST/humeurs";
 
     /** File d'attente pour les requêtes Web (en lien avec l'utilisation de Volley) */
     private RequestQueue fileRequete;

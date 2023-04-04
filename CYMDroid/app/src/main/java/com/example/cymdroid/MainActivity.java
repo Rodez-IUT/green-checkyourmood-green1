@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView adresseElectroniqueError,
                      motDePasseError;
 
-    private static final String URL_LOGIN = "http://10.0.2.2/API_REST/login/%s/%s";
+    private static final String URL_LOGIN = "http://192.168.56.101/green-checkyourmood-green1/API_REST/login/%s/%s";
 
     /** File d'attente pour les requêtes Web (en lien avec l'utilisation de Volley) */
     private RequestQueue fileRequete;

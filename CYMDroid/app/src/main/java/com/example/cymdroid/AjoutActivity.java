@@ -54,9 +54,9 @@ public class AjoutActivity extends Fragment implements View.OnClickListener {
 
     private final String FORMAT_DATE = "%s %s";
 
-    private final String URL_HUMEUR = "http://10.0.2.2/API_REST/humeur";
+    private final String URL_HUMEUR = "http://192.168.56.101/green-checkyourmood-green1/API_REST/humeur";
 
-    private final String URL_LISTE_HUMEURS = "http://10.0.2.2/API_REST/listeHumeurs";
+    private final String URL_LISTE_HUMEURS = "http://192.168.56.101/green-checkyourmood-green1/API_REST/listeHumeurs";
 
     /** File d'attente pour les requêtes Web (en lien avec l'utilisation de Volley) */
     private RequestQueue fileRequete;
